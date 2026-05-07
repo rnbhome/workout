@@ -359,6 +359,58 @@
   .notes textarea:focus { outline: none; }
   .notes textarea::placeholder { color: var(--ink-faint); font-style: italic; }
 
+  /* Exercise heatmap (dates × exercises) */
+  .ex-heatmap-section {
+    background: var(--paper); border: 1px solid var(--border);
+    border-radius: 14px; padding: 14px; margin-top: 22px;
+  }
+  .ex-heatmap-scroll {
+    overflow-x: auto; margin: 10px -14px 0; padding: 0 14px 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ex-heatmap {
+    display: grid; gap: 2px;
+    font-size: 9px; line-height: 1;
+  }
+  .ex-heatmap .row-head {
+    text-align: right; padding-right: 8px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-muted); align-self: center;
+    cursor: pointer; white-space: nowrap;
+  }
+  .ex-heatmap .row-head.today { color: var(--ink); font-weight: 700; }
+  .ex-heatmap .row-head:hover { color: var(--ink); }
+  .ex-heatmap .cat-head {
+    text-align: center; font-size: 8px; color: var(--ink-muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding-bottom: 4px; white-space: nowrap; overflow: hidden;
+  }
+  .ex-heatmap .ex-cell {
+    height: 14px; border-radius: 2px;
+    background: var(--bg); border: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .ex-heatmap .ex-cell.has-data { border-color: transparent; }
+  .ex-heatmap .ex-cell:hover { outline: 1px solid var(--ink); outline-offset: -1px; }
+  .ex-heatmap .gap { width: 6px; }
+  .ex-heatmap-legend {
+    display: flex; gap: 12px; margin-top: 12px;
+    font-size: 10px; color: var(--ink-muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    flex-wrap: wrap; align-items: center;
+  }
+  .ex-heatmap-legend .cat-chip { display: inline-flex; align-items: center; gap: 5px; }
+  .ex-heatmap-legend .swatch {
+    width: 24px; height: 10px; border-radius: 2px;
+    background: linear-gradient(to right, rgba(255,255,255,0.0), currentColor);
+  }
+  .ex-heatmap-legend .cat-stability { color: rgb(194,146,43); }
+  .ex-heatmap-legend .cat-lower { color: rgb(184,84,64); }
+  .ex-heatmap-legend .cat-upper-std { color: rgb(93,130,104); }
+  .ex-heatmap-legend .cat-upper-seat { color: rgb(74,106,138); }
+  .ex-heatmap-legend .cat-todo { color: rgb(154,144,128); }
+  .ex-heatmap-hint { font-size: 10px; color: var(--ink-faint); margin-top: 4px; }
+
   /* Sync bar + panel */
   .sync-bar {
     display: flex; justify-content: center; align-items: center;
@@ -488,6 +540,19 @@
       <span class="swatch" style="background:#8c6818;border-color:#6e5212;"></span>
       <span>More</span>
     </div>
+  </div>
+
+  <div class="ex-heatmap-section">
+    <div class="section-header" style="margin-bottom: 4px;">
+      <div class="section-title" style="font-size:15px;">Per-exercise heatmap</div>
+      <div class="section-rule"></div>
+      <div class="section-count">last 30 days</div>
+    </div>
+    <div class="ex-heatmap-scroll">
+      <div class="ex-heatmap" id="exercise-heatmap"></div>
+    </div>
+    <div class="ex-heatmap-legend" id="exercise-heatmap-legend"></div>
+    <div class="ex-heatmap-hint">Color intensity = weight relative to that exercise's all-time peak. Bodyweight exercises shown at fixed shade. Tap a cell to load that day.</div>
   </div>
 
   <div class="notes">
@@ -1510,6 +1575,7 @@ function updateStats() {
   }
   document.getElementById('volume-count').textContent = Math.round(volume);
   renderVolumeStrip();
+  renderExerciseHeatmap();
   const streak = computeStreak();
   document.getElementById('streak-count').textContent = streak;
   document.getElementById('streak-sub').textContent = streak === 1 ? 'day' : 'days';
@@ -1538,6 +1604,117 @@ async function changeDay(delta) {
   updateDateDisplay();
   renderAll();
   await renderHeatmap();
+}
+
+function catRGB(id) {
+  switch (id) {
+    case 'stability': return '194,146,43';
+    case 'lower': return '184,84,64';
+    case 'upper-std': return '93,130,104';
+    case 'upper-seat': return '74,106,138';
+    case 'todo': return '154,144,128';
+  }
+  return '154,144,128';
+}
+
+function renderExerciseHeatmap() {
+  const container = document.getElementById('exercise-heatmap');
+  const legend = document.getElementById('exercise-heatmap-legend');
+  if (!container) return;
+
+  const all = STATE.logs;
+  const days = 30;
+
+  const maxByEx = {};
+  for (const ex of EXERCISES) maxByEx[ex.id] = 0;
+  for (const log of Object.values(all)) {
+    for (const ex of EXERCISES) {
+      const e = log[ex.id];
+      if (e?.done && (e.weight || 0) > maxByEx[ex.id]) maxByEx[ex.id] = e.weight;
+    }
+  }
+
+  const colOrder = [];
+  const catGroups = [];
+  let firstCat = true;
+  for (const cat of CATEGORIES) {
+    const exs = EXERCISES.filter(e => e.category === cat.id);
+    if (exs.length === 0) continue;
+    if (!firstCat) { colOrder.push({ type: 'gap' }); catGroups.push({ type: 'gap' }); }
+    firstCat = false;
+    const startIdx = colOrder.length;
+    exs.forEach(ex => colOrder.push({ type: 'ex', exercise: ex }));
+    catGroups.push({ type: 'cat', cat, span: exs.length, startIdx });
+  }
+
+  const gridCols = ['34px'];
+  for (const c of colOrder) gridCols.push(c.type === 'gap' ? '6px' : '16px');
+
+  let html = '';
+  // Header row 1: blank corner + category labels spanning their cols
+  html += `<div class="row-head"></div>`;
+  for (const g of catGroups) {
+    if (g.type === 'gap') html += `<div class="gap"></div>`;
+    else html += `<div class="cat-head" style="grid-column: span ${g.span}; color: rgb(${catRGB(g.cat.id)});">${g.cat.label.split(' — ').pop()}</div>`;
+  }
+
+  // Body rows
+  const today = new Date(TODAY);
+  for (let i = 0; i < days; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const k = dateKey(d);
+    const log = all[k] || {};
+    const isT = isToday(d);
+    const dateLabel = `${d.getMonth() + 1}/${d.getDate()}`;
+    html += `<div class="row-head ${isT ? 'today' : ''}" data-date="${k}" title="${formatDate(d)}">${dateLabel}</div>`;
+    for (const c of colOrder) {
+      if (c.type === 'gap') { html += `<div class="gap"></div>`; continue; }
+      const ex = c.exercise;
+      const e = log[ex.id];
+      let style = '';
+      let cls = 'ex-cell';
+      if (e?.done) {
+        const isBodyweight = (ex.defaultWeight || 0) === 0;
+        let ratio;
+        if (isBodyweight) ratio = 0.55;
+        else {
+          const max = maxByEx[ex.id] || 1;
+          ratio = Math.max(0.2, Math.min(1, (e.weight || 0) / max));
+        }
+        style = `background:rgba(${catRGB(ex.category)},${ratio.toFixed(2)});`;
+        cls += ' has-data';
+      }
+      const valBit = e?.done
+        ? ` — ${e.weight || 0}kg ${e.sets || 0}×${e.reps || 0}`
+        : '';
+      const title = `${formatDate(d)} · ${ex.name}${valBit}`;
+      html += `<div class="${cls}" style="${style}" data-date="${k}" title="${title}"></div>`;
+    }
+  }
+
+  container.style.gridTemplateColumns = gridCols.join(' ');
+  container.innerHTML = html;
+
+  container.querySelectorAll('[data-date]').forEach(el => {
+    el.addEventListener('click', async () => {
+      saveNotes();
+      const [y, m, day] = el.dataset.date.split('-').map(Number);
+      currentDate = new Date(y, m - 1, day);
+      dayLog = await loadDay(currentDate);
+      await loadNotes();
+      updateDateDisplay();
+      renderAll();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  if (legend) {
+    legend.innerHTML = catGroups
+      .filter(g => g.type === 'cat')
+      .map(g => `<span class="cat-chip cat-${g.cat.id}"><span class="swatch"></span>${g.cat.label}</span>`)
+      .join('');
+  }
 }
 
 async function renderHeatmap() {
