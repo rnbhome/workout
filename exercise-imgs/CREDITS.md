@@ -23,4 +23,4 @@ Each exercise uses two frames (start + end) animated client-side as a 2-frame lo
 | `pronation-supination` | Wrist Rotations with Straight Bar | `Wrist_Rotations_with_Straight_Bar/0.jpg` | `Wrist_Rotations_with_Straight_Bar/1.jpg` |
 | `wrist-flex-ext` | Palms-Up Dumbbell Wrist Curl Over A Bench | `Palms-Up_Dumbbell_Wrist_Curl_Over_A_Bench/0.jpg` | `Palms-Up_Dumbbell_Wrist_Curl_Over_A_Bench/1.jpg` |
 | `posterior-fly` | Reverse Flyes | `Reverse_Flyes/0.jpg` | `Reverse_Flyes/1.jpg` |
-| `shoulder-internal-rotation` | *(in-house SVG — `svgs/shoulder-internal-rotation.svg`; behind-back lift-off motion isn't in free-exercise-db)* | — | — |
+| `shoulder-internal-rotation` | Internal Rotation with Band | `Internal_Rotation_with_Band/0.jpg` | `Internal_Rotation_with_Band/1.jpg` |
