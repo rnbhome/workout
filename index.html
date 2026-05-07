@@ -1580,53 +1580,30 @@ function renderRecommendations() {
 
   if (!isToday(currentDate)) { wrap.style.display = 'none'; return; }
 
-  const cats = CATEGORIES.filter(c => c.id !== 'todo');
-  const todayKey = dateKey(currentDate);
-
-  const catGap = {};
-  const picks = [];
-
-  for (const cat of cats) {
-    const exs = EXERCISES.filter(e => e.category === cat.id);
-    let gapForCat = Infinity;
-    const candidates = [];
-    for (const ex of exs) {
-      if (dayLog[ex.id]?.done) continue;
-      const last = lastDoneFor(ex.id);
-      const gap = last ? daysBetween(last.date, currentDate) : 999;
-      if (last && last.date === todayKey) continue;
-      const weight = last?.entry?.weight ?? ex.defaultWeight;
-      const sets = last?.entry?.sets ?? ex.defaultSets;
-      const reps = last?.entry?.reps ?? ex.defaultReps;
-      candidates.push({ ex, gap, last, weight, sets, reps });
-      if (gap < gapForCat) gapForCat = gap;
-    }
-    catGap[cat.id] = exs.some(e => dayLog[e.id]?.done) ? 0 : (candidates.length ? Math.max(...candidates.map(c => c.gap)) : 0);
-    candidates.sort((a, b) => b.gap - a.gap);
-    if (candidates.length) picks.push({ cat, pick: candidates[0] });
+  const MAX_PICKS = 6;
+  const candidates = [];
+  for (const ex of EXERCISES) {
+    if (ex.category === 'todo') continue;
+    if (dayLog[ex.id]?.done) continue;
+    const last = lastDoneFor(ex.id);
+    const gap = last ? daysBetween(last.date, currentDate) : 999;
+    const weight = last?.entry?.weight ?? ex.defaultWeight;
+    const sets = last?.entry?.sets ?? ex.defaultSets;
+    const reps = last?.entry?.reps ?? ex.defaultReps;
+    candidates.push({ ex, gap, last, weight, sets, reps });
   }
+  candidates.sort((a, b) => b.gap - a.gap);
+  const picks = candidates.slice(0, MAX_PICKS);
 
-  let turnCat = null;
-  let turnGap = -1;
-  for (const cat of cats) {
-    if ((catGap[cat.id] || 0) > turnGap) { turnGap = catGap[cat.id] || 0; turnCat = cat; }
-  }
+  turnEl.innerHTML = '';
 
   if (picks.length === 0) {
-    turnEl.innerHTML = '';
-    grid.innerHTML = `<div class="recs-empty" style="grid-column:1/-1;">All caught up — every category touched today ✓</div>`;
+    grid.innerHTML = `<div class="recs-empty" style="grid-column:1/-1;">All caught up ✓</div>`;
     wrap.style.display = '';
     return;
   }
 
-  if (turnCat && turnGap >= 2) {
-    turnEl.innerHTML = `Focus: <span class="turn-cat" style="color:rgb(${catRGB(turnCat.id)});">${turnCat.label}</span>`;
-  } else {
-    turnEl.innerHTML = '';
-  }
-
-  grid.innerHTML = picks.map(({ cat, pick }) => {
-    const { ex, gap, last, weight, sets, reps } = pick;
+  grid.innerHTML = picks.map(({ ex, gap, last, weight, sets, reps }) => {
     const isBW = (ex.defaultWeight || 0) === 0 && (!weight || weight === 0);
     const wTxt = isBW ? 'bodyweight' : `${weight} kg`;
     const specTxt = `${sets}×${reps} ${ex.repUnit}`;
@@ -1638,7 +1615,7 @@ function renderRecommendations() {
     else { agoTxt = `${gap}d ago`; stale = true; }
     const missingCls = stale ? ' missing' : '';
     return `<div class="rec${missingCls}" data-rec-id="${ex.id}" title="${ex.name}">
-      <span class="dot" style="background:rgb(${catRGB(cat.id)});"></span>
+      <span class="dot" style="background:rgb(${catRGB(ex.category)});"></span>
       <div class="rec-body">
         <div class="rec-name">${ex.name}</div>
         <div class="rec-meta">${wTxt} · ${specTxt} · <span class="ago${stale ? ' stale' : ''}">${agoTxt}</span></div>
