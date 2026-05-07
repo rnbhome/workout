@@ -380,7 +380,7 @@ const EXERCISES = [
   { id: 'lunges', category: 'lower', name: 'Lunges',
     desc: 'Step forward, lower until both knees ~90°, push back.',
     defaultWeight: 0, defaultSets: 3, defaultReps: 10, repUnit: 'reps/leg',
-    currentSituation: 'Not yet started — to add to routine.',
+    currentSituation: 'Bodyweight static lunges, holding rail.',
     formCues: 'Long step forward. Drop straight down — front knee over ankle, back knee toward floor. Torso upright.',
     progression: [
       { label: 'Static lunges, hold rail (start here)', current: true },
@@ -482,26 +482,26 @@ const EXERCISES = [
       { label: '4 kg, 3×12 each direction' },
       { label: '5 kg flexion (extension stays at 4)' }
     ] },
-  { id: 'posterior-fly', category: 'todo', name: 'Posterior Fly',
+  { id: 'posterior-fly', category: 'upper-std', name: 'Posterior Fly',
     desc: 'Bent at hips, raise arms out to sides — squeezes rear delts and upper back.',
     defaultWeight: 1, defaultSets: 2, defaultReps: 10, repUnit: 'reps',
-    currentSituation: 'Not yet started — planned with 1 kg pink.',
+    currentSituation: '1 kg pink, 2 × 10.',
     formCues: 'Hinge at hips, flat back, arms hanging. Lift arms out to sides, squeeze shoulder blades together. Slow and controlled.',
     progression: [
-      { label: 'No weight, learn the pattern', current: true },
-      { label: '1 kg pink, 2×10' },
+      { label: 'No weight, learn the pattern', done: true },
+      { label: '1 kg pink, 2×10', current: true },
       { label: '1 kg, 3×12' },
       { label: '2 kg yellow' },
       { label: '2 kg, 3×12 with 2-sec squeeze at top' }
     ] },
-  { id: 'shoulder-internal-rotation', category: 'todo', name: 'Shoulder Internal Rotation (Behind Back)',
+  { id: 'shoulder-internal-rotation', category: 'upper-std', name: 'Shoulder Internal Rotation (Behind Back)',
     desc: 'Hand behind lower back, lift weight away from body.',
     defaultWeight: 1, defaultSets: 2, defaultReps: 10, repUnit: 'reps/arm',
-    currentSituation: 'Not yet started — planned with 1 kg.',
+    currentSituation: '1 kg pink, 2 × 10 each arm.',
     formCues: 'Hand behind small of back, palm facing out. Lift weight straight back, away from body. Tiny movement — quality over range.',
     progression: [
-      { label: 'No weight, learn the motion', current: true },
-      { label: '1 kg pink, 2×10' },
+      { label: 'No weight, learn the motion', done: true },
+      { label: '1 kg pink, 2×10', current: true },
       { label: '1 kg, 3×12' },
       { label: 'Switch to band against doorframe (better setup)' },
       { label: '2 kg with band' }
