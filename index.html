@@ -439,10 +439,10 @@
     <button class="sync-pill local-only" id="sync-pill"><span class="dot"></span><span id="sync-text">Local only</span></button>
   </div>
   <div class="sync-panel" id="sync-panel">
-    <h4>Sync to GitHub</h4>
-    <p>Saves your workouts to <code>data/state.json</code> in this repo, so they sync across devices.
+    <h4>Connect to GitHub to start logging</h4>
+    <p>Your workouts sync to <code>data/state.json</code> in <code>rnbhome/workout</code>, so they're available on every device.
        Create a fine-grained PAT at <a href="https://github.com/settings/personal-access-tokens" target="_blank" rel="noopener">github.com/settings/personal-access-tokens</a>
-       with <strong>Contents: Read &amp; write</strong> scoped to <code>rnbhome/workout</code>.</p>
+       with <strong>Contents: Read &amp; write</strong> scoped to this repo. The token is stored only in this browser.</p>
     <input id="token-input" type="password" placeholder="github_pat_..." autocomplete="off">
     <div class="btn-row">
       <button class="primary" id="save-token">Save &amp; sync</button>
@@ -953,7 +953,7 @@ function updateSyncBadge() {
     case 'synced': text.textContent = 'Synced ' + relTime(lastSyncedAt); break;
     case 'error': text.textContent = 'Sync error — tap to retry'; break;
     case 'local-only':
-    default: text.textContent = getToken() ? 'Idle' : 'Local only — tap to set up sync'; break;
+    default: text.textContent = getToken() ? 'Idle' : 'Sync not set up — tap to connect'; break;
   }
 }
 
@@ -1588,6 +1588,9 @@ async function init() {
   migrateLegacyKeys();
   setupSyncUI();
   setSyncStatus(getToken() ? 'idle' : 'local-only');
+  if (!getToken()) {
+    document.getElementById('sync-panel').classList.add('show');
+  }
 
   document.getElementById('prev-day').addEventListener('click', () => changeDay(-1));
   document.getElementById('next-day').addEventListener('click', () => changeDay(1));
