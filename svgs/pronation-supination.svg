@@ -1,0 +1,69 @@
+<svg viewBox="0 0 240 280" xmlns="http://www.w3.org/2000/svg"><defs>
+<linearGradient id="skin" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f4cba6"/><stop offset="50%" stop-color="#e8b890"/><stop offset="100%" stop-color="#c89274"/></linearGradient>
+<linearGradient id="skinShadow" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#b8855d"/><stop offset="100%" stop-color="#8a5e3a"/></linearGradient>
+<linearGradient id="skinHi" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#fde4c4"/><stop offset="100%" stop-color="#f4cba6"/></linearGradient>
+<radialGradient id="cheek" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e89a8a" stop-opacity="0.5"/><stop offset="100%" stop-color="#e89a8a" stop-opacity="0"/></radialGradient>
+<linearGradient id="shirt" x1="0%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#6a9bff"/><stop offset="50%" stop-color="#4a7be0"/><stop offset="100%" stop-color="#2a5cc0"/></linearGradient>
+<linearGradient id="shirtDark" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1d3870"/><stop offset="100%" stop-color="#0f2050"/></linearGradient>
+<linearGradient id="shirtHi" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8ab4ff"/><stop offset="100%" stop-color="#6a9bff"/></linearGradient>
+<linearGradient id="shorts" x1="0%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#4a4a4a"/><stop offset="50%" stop-color="#2a2a2a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<linearGradient id="shoe" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="60%" stop-color="#d8d8d8"/><stop offset="100%" stop-color="#7a7a7a"/></linearGradient>
+<linearGradient id="sole" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<linearGradient id="metal" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9a9a9a"/><stop offset="20%" stop-color="#5a5a5a"/><stop offset="60%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<radialGradient id="weightPlate" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#6a6a6a"/><stop offset="60%" stop-color="#2a2a2a"/><stop offset="100%" stop-color="#0a0a0a"/></radialGradient>
+<linearGradient id="hair" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#5a3d23"/><stop offset="50%" stop-color="#3d2817"/><stop offset="100%" stop-color="#2a1a0c"/></linearGradient>
+<linearGradient id="bag" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8a4530"/><stop offset="100%" stop-color="#5a2a18"/></linearGradient>
+<linearGradient id="wall" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ddc8a8"/><stop offset="100%" stop-color="#b8a080"/></linearGradient>
+<linearGradient id="chair" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8a6a4a"/><stop offset="100%" stop-color="#5a4028"/></linearGradient>
+</defs>
+<line x1="20" y1="252" x2="220" y2="252" stroke="#888" stroke-width="2"/>
+
+<!-- chair arm rest (forearm rests here) -->
+<rect x="10" y="120" width="120" height="14" rx="2" fill="url(#chair)"/>
+<rect x="10" y="118" width="120" height="3" fill="#5a4028"/>
+<line x1="10" y1="134" x2="130" y2="134" stroke="#3a2818" stroke-width="0.5"/>
+
+<!-- elbow joint -->
+<ellipse cx="22" cy="127" rx="9" ry="6" fill="url(#skinShadow)"/>
+<ellipse cx="24" cy="125" rx="6" ry="3" fill="url(#skin)"/>
+
+<!-- forearm (top-down view, going right) -->
+<rect x="30" y="118" width="92" height="20" rx="4" fill="url(#skin)"/>
+<ellipse cx="76" cy="123" rx="40" ry="3" fill="url(#skinHi)" opacity="0.55"/>
+<!-- vein on forearm -->
+<path d="M 50 124 Q 76 122 100 124" fill="none" stroke="#7a5040" stroke-width="0.5" opacity="0.4"/>
+<!-- wrist joint -->
+<ellipse cx="122" cy="127" rx="6" ry="6" fill="url(#skinShadow)"/>
+
+<!-- hand grip on weight (vertical bar - palm down) -->
+<path d="M 122 118 Q 132 110 138 116 L 138 138 Q 132 144 122 138 Z" fill="url(#skin)"/>
+<line x1="128" y1="120" x2="128" y2="135" stroke="url(#skinShadow)" stroke-width="0.8"/>
+
+<!-- vertical weighted bar (the lever) -->
+<line x1="138" y1="40" x2="138" y2="220" stroke="url(#metal)" stroke-width="3"/>
+
+<!-- weight on TOP of bar (palm up position) -->
+<g>
+<rect x="125" y="36" width="26" height="14" rx="2" fill="url(#weightPlate)"/>
+<rect x="127" y="38" width="22" height="10" rx="1.5" fill="#1a1a1a"/>
+<text x="138" y="46" font-size="7" fill="#9a9a9a" text-anchor="middle" font-weight="bold">2.5</text>
+</g>
+
+<!-- ghost weight at BOTTOM of bar (palm down position - start) -->
+<g opacity="0.45">
+<rect x="125" y="200" width="26" height="14" rx="2" fill="url(#weightPlate)"/>
+<rect x="127" y="202" width="22" height="10" rx="1.5" fill="#1a1a1a"/>
+<text x="138" y="210" font-size="7" fill="#9a9a9a" text-anchor="middle" font-weight="bold">2.5</text>
+</g>
+
+<text x="155" y="215" font-size="9" fill="#999" font-style="italic" font-family="Georgia">start</text>
+<text x="155" y="50" font-size="9" fill="#b85440" font-style="italic" font-family="Georgia" font-weight="bold">end</text>
+
+<!-- ROTATION arrow showing pronation/supination -->
+<path d="M 165 60 C 195 100 195 170 165 200" fill="none" stroke="#d4906a" stroke-width="2.5" stroke-dasharray="6,5" opacity="0.5" stroke-linecap="round"/>
+<polygon points="160,55 168,58 165,68" fill="#d4906a" opacity="0.55"/>
+<polygon points="160,205 168,202 165,192" fill="#d4906a" opacity="0.55"/>
+
+<text x="170" y="138" font-size="11" fill="#b85440" font-style="italic" font-family="Georgia" opacity="0.85">rotate</text>
+<text x="170" y="150" font-size="11" fill="#b85440" font-style="italic" font-family="Georgia" opacity="0.85">forearm</text>
+</svg>

@@ -1,0 +1,133 @@
+<svg viewBox="0 0 240 280" xmlns="http://www.w3.org/2000/svg"><defs>
+<linearGradient id="skin" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f4cba6"/><stop offset="50%" stop-color="#e8b890"/><stop offset="100%" stop-color="#c89274"/></linearGradient>
+<linearGradient id="skinShadow" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#b8855d"/><stop offset="100%" stop-color="#8a5e3a"/></linearGradient>
+<linearGradient id="skinHi" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#fde4c4"/><stop offset="100%" stop-color="#f4cba6"/></linearGradient>
+<radialGradient id="cheek" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e89a8a" stop-opacity="0.5"/><stop offset="100%" stop-color="#e89a8a" stop-opacity="0"/></radialGradient>
+<linearGradient id="shirt" x1="0%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#6a9bff"/><stop offset="50%" stop-color="#4a7be0"/><stop offset="100%" stop-color="#2a5cc0"/></linearGradient>
+<linearGradient id="shirtDark" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1d3870"/><stop offset="100%" stop-color="#0f2050"/></linearGradient>
+<linearGradient id="shirtHi" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8ab4ff"/><stop offset="100%" stop-color="#6a9bff"/></linearGradient>
+<linearGradient id="shorts" x1="0%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#4a4a4a"/><stop offset="50%" stop-color="#2a2a2a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<linearGradient id="shoe" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="60%" stop-color="#d8d8d8"/><stop offset="100%" stop-color="#7a7a7a"/></linearGradient>
+<linearGradient id="sole" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<linearGradient id="metal" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9a9a9a"/><stop offset="20%" stop-color="#5a5a5a"/><stop offset="60%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<radialGradient id="weightPlate" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#6a6a6a"/><stop offset="60%" stop-color="#2a2a2a"/><stop offset="100%" stop-color="#0a0a0a"/></radialGradient>
+<linearGradient id="hair" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#5a3d23"/><stop offset="50%" stop-color="#3d2817"/><stop offset="100%" stop-color="#2a1a0c"/></linearGradient>
+<linearGradient id="bag" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8a4530"/><stop offset="100%" stop-color="#5a2a18"/></linearGradient>
+<linearGradient id="wall" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ddc8a8"/><stop offset="100%" stop-color="#b8a080"/></linearGradient>
+<linearGradient id="chair" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8a6a4a"/><stop offset="100%" stop-color="#5a4028"/></linearGradient>
+</defs>
+<line x1="20" y1="252" x2="220" y2="252" stroke="#888" stroke-width="2"/>
+<ellipse cx="120" cy="256" rx="100" ry="3" fill="#000" opacity="0.15"/>
+
+
+<g transform="translate(20,0)">
+<ellipse cx="100" cy="48" rx="18" ry="22" fill="url(#skinShadow)" opacity="0.6"/>
+<path d="M 78 48 C 76 22, 100 14, 100 14 C 100 14, 124 22, 122 48 C 122 56, 120 60, 118 64 L 82 64 C 80 60, 78 56, 78 48 Z" fill="url(#hair)"/>
+<path d="M 86 28 Q 100 22 114 28" fill="none" stroke="#5a3d23" stroke-width="2" opacity="0.6"/>
+<path d="M 84 40 Q 100 32 116 40" fill="none" stroke="#5a3d23" stroke-width="1.4" opacity="0.5"/>
+<path d="M 86 52 Q 100 46 114 52" fill="none" stroke="#5a3d23" stroke-width="1" opacity="0.4"/>
+<path d="M 80 60 Q 100 64 120 60 L 122 64 L 78 64 Z" fill="#2a1a0c"/>
+<ellipse cx="80" cy="58" rx="2" ry="3" fill="url(#skinShadow)" opacity="0.7"/>
+<ellipse cx="120" cy="58" rx="2" ry="3" fill="url(#skinShadow)" opacity="0.7"/>
+</g>
+
+<!-- neck back view -->
+<path d="M 113 70 L 111 82 L 129 82 L 127 70 Z" fill="url(#skinShadow)"/>
+
+<!-- BACK view torso (visible shoulder blades) -->
+<path d="M 100 80 C 92 96 92 124 96 144 L 144 148 C 148 124, 148 96, 140 80 Z" fill="url(#shirt)"/>
+<!-- shirt highlight -->
+<path d="M 102 84 Q 100 110 100 144" fill="none" stroke="url(#shirtHi)" stroke-width="2" opacity="0.4"/>
+<!-- shoulder blade hints (the curves of the scapula) -->
+<path d="M 102 96 Q 110 110 108 130" fill="none" stroke="url(#shirtDark)" stroke-width="1.2" opacity="0.55"/>
+<path d="M 138 96 Q 130 110 132 130" fill="none" stroke="url(#shirtDark)" stroke-width="1.2" opacity="0.55"/>
+<!-- spine line -->
+<line x1="120" y1="84" x2="120" y2="146" stroke="url(#shirtDark)" stroke-width="0.8" opacity="0.5"/>
+<path d="M 96 144 Q 120 150 144 148" fill="none" stroke="url(#shirtDark)" stroke-width="2"/>
+
+<!-- non-working arm at side (left) -->
+<ellipse cx="148" cy="86" rx="11" ry="8" fill="url(#skin)"/>
+<path d="M 146 88 Q 152 120 154 165 L 166 165 Q 164 120 158 90 Z" fill="url(#skin)"/>
+<ellipse cx="158" cy="130" rx="3" ry="14" fill="url(#skinHi)" opacity="0.5"/>
+<ellipse cx="160" cy="167" rx="6" ry="3" fill="url(#skinShadow)"/>
+<path d="M 154 168 Q 152 188 158 198 L 168 198 Q 170 182 168 168 Z" fill="url(#skin)"/>
+
+<!-- working arm: bent BEHIND back, hand at lower back area -->
+<ellipse cx="92" cy="86" rx="11" ry="8" fill="url(#skin)"/>
+<!-- upper arm going down/back -->
+<path d="M 88 92 Q 78 110 82 130 L 92 132 Q 96 110 100 90 Z" fill="url(#skinShadow)"/>
+<ellipse cx="83" cy="125" rx="3" ry="10" fill="url(#skin)" opacity="0.4"/>
+<!-- elbow -->
+<ellipse cx="86" cy="132" rx="6" ry="5" fill="url(#skinShadow)"/>
+<!-- forearm crossing behind to lower back -->
+<path d="M 82 132 Q 95 142 110 148 L 110 158 Q 95 152 80 142 Z" fill="url(#skinShadow)"/>
+<!-- hand with weight LIFTED AWAY from back (pulled posterior) -->
+<path d="M 110 148 Q 115 165 110 178 L 96 178 Q 100 165 100 150 Z" fill="url(#skin)"/>
+<ellipse cx="105" cy="175" rx="4" ry="3" fill="url(#skinShadow)"/>
+
+<g opacity="1.0">
+<rect x="102" y="183" width="6" height="24" rx="1" fill="url(#metal)"/>
+<rect x="96" y="177" width="18" height="12" rx="2" fill="url(#weightPlate)"/>
+<rect x="98" y="179" width="14" height="8" rx="1" fill="#1a1a1a"/>
+<text x="105" y="186" font-size="6" fill="#9a9a9a" text-anchor="middle" font-weight="bold">5</text>
+<rect x="96" y="201" width="18" height="12" rx="2" fill="url(#weightPlate)"/>
+<rect x="98" y="203" width="14" height="8" rx="1" fill="#1a1a1a"/>
+<text x="105" y="210" font-size="6" fill="#9a9a9a" text-anchor="middle" font-weight="bold">5</text>
+</g>
+
+<!-- ghost: hand AT lower back (start position) -->
+<g opacity="0.4">
+<ellipse cx="110" cy="158" rx="5" ry="3" fill="url(#skinShadow)"/>
+
+<g opacity="1.0">
+<rect x="112" y="153" width="6" height="24" rx="1" fill="url(#metal)"/>
+<rect x="106" y="147" width="18" height="12" rx="2" fill="url(#weightPlate)"/>
+<rect x="108" y="149" width="14" height="8" rx="1" fill="#1a1a1a"/>
+<text x="115" y="156" font-size="6" fill="#9a9a9a" text-anchor="middle" font-weight="bold">5</text>
+<rect x="106" y="171" width="18" height="12" rx="2" fill="url(#weightPlate)"/>
+<rect x="108" y="173" width="14" height="8" rx="1" fill="#1a1a1a"/>
+<text x="115" y="180" font-size="6" fill="#9a9a9a" text-anchor="middle" font-weight="bold">5</text>
+</g>
+</g>
+
+<text x="118" y="165" font-size="9" fill="#999" font-style="italic" font-family="Georgia">start</text>
+<text x="85" y="220" font-size="9" fill="#b85440" font-style="italic" font-family="Georgia" font-weight="bold">end</text>
+
+<!-- shorts (back view) -->
+<path d="M 96 148 Q 92 166 98 188 L 142 188 Q 148 166 144 148 Z" fill="url(#shorts)"/>
+<rect x="94" y="146" width="52" height="3" fill="#0a0a0a"/>
+
+<!-- legs -->
+<path d="M 105 190 Q 103 222 105 250 L 122 250 Q 122 222 120 190 Z" fill="url(#skin)"/>
+<path d="M 122 190 Q 120 222 122 250 L 138 250 Q 140 222 138 190 Z" fill="url(#skin)"/>
+
+<path d="M 101 250 L 123 250 L 129 246 Q 129 244 125 244 L 101 244 Q 99 244 99 248 Z" fill="url(#shoe)" stroke="#222" stroke-width="0.6"/>
+<path d="M 99 248 L 129 246 L 129 250 L 99 250 Z" fill="url(#sole)"/>
+<path d="M 121 250 L 129 246 Q 127 246 125 247 L 121 249 Z" fill="#e0e0e0" stroke="#222" stroke-width="0.4"/>
+<line x1="110" y1="245" x2="114" y2="247" stroke="#fff" stroke-width="0.7"/>
+<line x1="114" y1="245" x2="118" y2="247" stroke="#fff" stroke-width="0.7"/>
+<line x1="118" y1="245" x2="122" y2="246" stroke="#fff" stroke-width="0.7"/>
+<path d="M 108 247 Q 116 249 124 247" fill="none" stroke="#3460c8" stroke-width="1.4"/>
+<line x1="110" y1="249" x2="110" y2="250" stroke="#3a3a3a" stroke-width="0.3"/>
+<line x1="114" y1="249" x2="114" y2="250" stroke="#3a3a3a" stroke-width="0.3"/>
+<line x1="118" y1="249" x2="118" y2="250" stroke="#3a3a3a" stroke-width="0.3"/>
+
+<path d="M 119 250 L 141 250 L 147 246 Q 147 244 143 244 L 119 244 Q 117 244 117 248 Z" fill="url(#shoe)" stroke="#222" stroke-width="0.6"/>
+<path d="M 117 248 L 147 246 L 147 250 L 117 250 Z" fill="url(#sole)"/>
+<path d="M 139 250 L 147 246 Q 145 246 143 247 L 139 249 Z" fill="#e0e0e0" stroke="#222" stroke-width="0.4"/>
+<line x1="128" y1="245" x2="132" y2="247" stroke="#fff" stroke-width="0.7"/>
+<line x1="132" y1="245" x2="136" y2="247" stroke="#fff" stroke-width="0.7"/>
+<line x1="136" y1="245" x2="140" y2="246" stroke="#fff" stroke-width="0.7"/>
+<path d="M 126 247 Q 134 249 142 247" fill="none" stroke="#3460c8" stroke-width="1.4"/>
+<line x1="128" y1="249" x2="128" y2="250" stroke="#3a3a3a" stroke-width="0.3"/>
+<line x1="132" y1="249" x2="132" y2="250" stroke="#3a3a3a" stroke-width="0.3"/>
+<line x1="136" y1="249" x2="136" y2="250" stroke="#3a3a3a" stroke-width="0.3"/>
+
+<!-- (back) label -->
+<text x="170" y="40" font-size="9" fill="#888" font-style="italic" font-family="Georgia">view: back</text>
+
+<!-- trajectory: weight lifted away (down/back from body) -->
+
+<path d="M 115 165 C 112 175 108 188 105 200" fill="none" stroke="#d4906a" stroke-width="2.5" stroke-dasharray="6,5" opacity="0.5" stroke-linecap="round"/>
+<polygon points="100,194 105,205 110,196" fill="#d4906a" opacity="0.55"/>
+</svg>
