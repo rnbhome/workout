@@ -1,6 +1,70 @@
 {
   "version": 1,
-  "logs": {},
+  "logs": {
+    "2026-05-05": {
+      "pushup-holds": {
+        "done": true,
+        "weight": 0,
+        "sets": 3,
+        "reps": 20
+      },
+      "thoracic-rotation": {
+        "done": true,
+        "weight": 0,
+        "sets": 2,
+        "reps": 10
+      },
+      "leg-extensions": {
+        "done": true,
+        "weight": 2,
+        "sets": 3,
+        "reps": 10
+      },
+      "side-hip-abduction": {
+        "done": true,
+        "weight": 2,
+        "sets": 3,
+        "reps": 10
+      },
+      "hip-flexion": {
+        "done": true,
+        "weight": 2,
+        "sets": 3,
+        "reps": 10
+      },
+      "shoulder-flexion": {
+        "done": true,
+        "weight": 1,
+        "sets": 2,
+        "reps": 10
+      },
+      "shoulder-abduction-standing": {
+        "done": true,
+        "weight": 1,
+        "sets": 2,
+        "reps": 10
+      },
+      "heel-raises": {
+        "done": true,
+        "weight": 0,
+        "sets": 3,
+        "reps": 15
+      },
+      "squats": {
+        "done": true,
+        "weight": 12.5,
+        "sets": 3,
+        "reps": 15
+      },
+      "pec-stretch": {
+        "done": true,
+        "weight": 0,
+        "sets": 2,
+        "reps": 30
+      }
+    },
+    "2026-05-07": {}
+  },
   "notes": {},
   "tiers": {}
 }
