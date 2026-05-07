@@ -1,0 +1,81 @@
+<svg viewBox="0 0 240 280" xmlns="http://www.w3.org/2000/svg"><defs>
+<linearGradient id="skin" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f4cba6"/><stop offset="50%" stop-color="#e8b890"/><stop offset="100%" stop-color="#c89274"/></linearGradient>
+<linearGradient id="skinShadow" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#b8855d"/><stop offset="100%" stop-color="#8a5e3a"/></linearGradient>
+<linearGradient id="skinHi" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#fde4c4"/><stop offset="100%" stop-color="#f4cba6"/></linearGradient>
+<radialGradient id="cheek" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e89a8a" stop-opacity="0.5"/><stop offset="100%" stop-color="#e89a8a" stop-opacity="0"/></radialGradient>
+<linearGradient id="shirt" x1="0%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#6a9bff"/><stop offset="50%" stop-color="#4a7be0"/><stop offset="100%" stop-color="#2a5cc0"/></linearGradient>
+<linearGradient id="shirtDark" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1d3870"/><stop offset="100%" stop-color="#0f2050"/></linearGradient>
+<linearGradient id="shirtHi" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8ab4ff"/><stop offset="100%" stop-color="#6a9bff"/></linearGradient>
+<linearGradient id="shorts" x1="0%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#4a4a4a"/><stop offset="50%" stop-color="#2a2a2a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<linearGradient id="shoe" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="60%" stop-color="#d8d8d8"/><stop offset="100%" stop-color="#7a7a7a"/></linearGradient>
+<linearGradient id="sole" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<linearGradient id="metal" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9a9a9a"/><stop offset="20%" stop-color="#5a5a5a"/><stop offset="60%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<radialGradient id="weightPlate" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#6a6a6a"/><stop offset="60%" stop-color="#2a2a2a"/><stop offset="100%" stop-color="#0a0a0a"/></radialGradient>
+<linearGradient id="hair" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#5a3d23"/><stop offset="50%" stop-color="#3d2817"/><stop offset="100%" stop-color="#2a1a0c"/></linearGradient>
+<linearGradient id="bag" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8a4530"/><stop offset="100%" stop-color="#5a2a18"/></linearGradient>
+<linearGradient id="wall" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ddc8a8"/><stop offset="100%" stop-color="#b8a080"/></linearGradient>
+<linearGradient id="chair" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8a6a4a"/><stop offset="100%" stop-color="#5a4028"/></linearGradient>
+</defs>
+<!-- table/chair surface with depth -->
+<rect x="10" y="115" width="130" height="20" fill="url(#chair)"/>
+<rect x="10" y="115" width="130" height="3" fill="#5a4028"/>
+<line x1="10" y1="135" x2="140" y2="135" stroke="#3a2818" stroke-width="1"/>
+<line x1="10" y1="252" x2="220" y2="252" stroke="#888" stroke-width="2"/>
+
+<!-- forearm resting on table (side view, going right) -->
+<ellipse cx="22" cy="118" rx="8" ry="5" fill="url(#skinShadow)"/>
+<rect x="22" y="108" width="116" height="14" rx="3" fill="url(#skin)"/>
+<ellipse cx="76" cy="112" rx="50" ry="3" fill="url(#skinHi)" opacity="0.55"/>
+<!-- vein -->
+<path d="M 50 116 Q 76 114 100 116" fill="none" stroke="#7a5040" stroke-width="0.5" opacity="0.4"/>
+
+<!-- wrist joint at table edge -->
+<ellipse cx="138" cy="115" rx="6" ry="5" fill="url(#skinShadow)"/>
+
+<!-- hand position UP (extension - dashed/ghost) -->
+<g opacity="0.4">
+<path d="M 138 110 Q 145 80 152 60 L 162 60 Q 158 80 152 115 Z" fill="url(#skinShadow)"/>
+<ellipse cx="155" cy="60" rx="4" ry="3" fill="url(#skinShadow)"/>
+
+<g opacity="1.0">
+<rect x="143" y="57" width="24" height="6" rx="1" fill="url(#metal)"/>
+<line x1="147" y1="59" x2="163" y2="59" stroke="#0a0a0a" stroke-width="0.4"/>
+<line x1="147" y1="61" x2="163" y2="61" stroke="#0a0a0a" stroke-width="0.4"/>
+<rect x="137" y="51" width="12" height="18" rx="2" fill="url(#weightPlate)"/>
+<rect x="139" y="53" width="8" height="14" rx="1" fill="#1a1a1a"/>
+<text x="143" y="62" font-size="6" fill="#9a9a9a" text-anchor="middle" font-weight="bold">5</text>
+<circle cx="143" cy="60" r="1.2" fill="#3a3a3a"/>
+<rect x="161" y="51" width="12" height="18" rx="2" fill="url(#weightPlate)"/>
+<rect x="163" y="53" width="8" height="14" rx="1" fill="#1a1a1a"/>
+<text x="167" y="62" font-size="6" fill="#9a9a9a" text-anchor="middle" font-weight="bold">5</text>
+<circle cx="167" cy="60" r="1.2" fill="#3a3a3a"/>
+</g>
+</g>
+
+<!-- hand position DOWN (flexion - solid/end) -->
+<path d="M 138 122 Q 145 150 152 175 L 162 175 Q 158 150 152 118 Z" fill="url(#skin)"/>
+<ellipse cx="155" cy="175" rx="4" ry="3" fill="url(#skin)"/>
+
+<g opacity="1.0">
+<rect x="143" y="172" width="24" height="6" rx="1" fill="url(#metal)"/>
+<line x1="147" y1="174" x2="163" y2="174" stroke="#0a0a0a" stroke-width="0.4"/>
+<line x1="147" y1="176" x2="163" y2="176" stroke="#0a0a0a" stroke-width="0.4"/>
+<rect x="137" y="166" width="12" height="18" rx="2" fill="url(#weightPlate)"/>
+<rect x="139" y="168" width="8" height="14" rx="1" fill="#1a1a1a"/>
+<text x="143" y="177" font-size="6" fill="#9a9a9a" text-anchor="middle" font-weight="bold">5</text>
+<circle cx="143" cy="175" r="1.2" fill="#3a3a3a"/>
+<rect x="161" y="166" width="12" height="18" rx="2" fill="url(#weightPlate)"/>
+<rect x="163" y="168" width="8" height="14" rx="1" fill="#1a1a1a"/>
+<text x="167" y="177" font-size="6" fill="#9a9a9a" text-anchor="middle" font-weight="bold">5</text>
+<circle cx="167" cy="175" r="1.2" fill="#3a3a3a"/>
+</g>
+
+<text x="170" y="60" font-size="9" fill="#999" font-style="italic" font-family="Georgia">start</text>
+<text x="170" y="180" font-size="9" fill="#b85440" font-style="italic" font-family="Georgia" font-weight="bold">end</text>
+
+<!-- arrows showing both directions -->
+
+<path d="M 175 65 C 200 110 200 130 175 170" fill="none" stroke="#d4906a" stroke-width="2.5" stroke-dasharray="6,5" opacity="0.5" stroke-linecap="round"/>
+<polygon points="168,165 178,170 173,178" fill="#d4906a" opacity="0.55"/>
+<text x="180" y="120" font-size="9" fill="#b85440" font-style="italic" font-family="Georgia" opacity="0.85">up &amp; down</text>
+</svg>
