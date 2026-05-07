@@ -852,16 +852,16 @@ const EXERCISES = [
       { label: '2 kg yellow' },
       { label: '2 kg, 3×12 with 2-sec squeeze at top' }
     ] },
-  { id: 'shoulder-internal-rotation', category: 'upper-std', name: 'Shoulder Internal Rotation (Behind Back)',
-    desc: 'Hand behind lower back, lift weight away from body.',
+  { id: 'shoulder-internal-rotation', category: 'upper-std', name: 'Shoulder Internal Rotation',
+    desc: 'Standing, elbow at side bent 90°, rotate forearm inward across the belly.',
     defaultWeight: 1, defaultSets: 2, defaultReps: 10, repUnit: 'reps/arm',
     currentSituation: '1 kg pink, 2 × 10 each arm.',
-    formCues: 'Hand behind small of back, palm facing out. Lift weight straight back, away from body. Tiny movement — quality over range.',
+    formCues: 'Stand tall, elbow tucked tight to ribs. Forearm rotates inward across the belly. Slow and controlled — small movement.',
     progression: [
       { label: 'No weight, learn the motion', done: true },
       { label: '1 kg pink, 2×10', current: true },
       { label: '1 kg, 3×12' },
-      { label: 'Switch to band against doorframe (better setup)' },
+      { label: 'Switch to band against doorframe' },
       { label: '2 kg with band' }
     ] }
 ];
@@ -1499,16 +1499,11 @@ function renderExerciseShell(ex) {
           ${sparkSvg}
         </div>` : '';
 
-  const SVG_ONLY = new Set(['shoulder-internal-rotation']);
-  const illustration = SVG_ONLY.has(ex.id)
-    ? `<div class="illustration"><img class="frame-a" src="svgs/${ex.id}.svg" alt="" loading="lazy" decoding="async"></div>`
-    : `<div class="illustration"><img class="frame-a" src="exercise-imgs/${ex.id}.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove();"><img class="frame-b" src="exercise-imgs/${ex.id}-1.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove();"></div>`;
-
   return `
     <div class="card ${isDone ? 'done' : ''}" data-id="${ex.id}">
       <div class="accent-bar ${cat.accent}"></div>
       <div class="card-top">
-        ${illustration}
+        <div class="illustration"><img class="frame-a" src="exercise-imgs/${ex.id}.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove();"><img class="frame-b" src="exercise-imgs/${ex.id}-1.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove();"></div>
         <div class="card-main">
           <div class="exercise-name">${ex.name}${isPR ? '<span class="chip pr">★ PR</span>' : ''}</div>
           <div class="exercise-desc">${ex.desc}</div>
