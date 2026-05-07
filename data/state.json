@@ -63,7 +63,27 @@
         "reps": 30
       }
     },
-    "2026-05-07": {}
+    "2026-05-07": {},
+    "2026-05-06": {
+      "lunges": {
+        "done": true,
+        "weight": 0,
+        "sets": 3,
+        "reps": 10
+      },
+      "shoulder-internal-rotation": {
+        "done": true,
+        "weight": 1,
+        "sets": 2,
+        "reps": 10
+      },
+      "posterior-fly": {
+        "done": true,
+        "weight": 1,
+        "sets": 2,
+        "reps": 10
+      }
+    }
   },
   "notes": {},
   "tiers": {}
