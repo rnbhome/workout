@@ -1,0 +1,93 @@
+<svg viewBox="0 0 240 280" xmlns="http://www.w3.org/2000/svg"><defs>
+<linearGradient id="skin" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f4cba6"/><stop offset="50%" stop-color="#e8b890"/><stop offset="100%" stop-color="#c89274"/></linearGradient>
+<linearGradient id="skinShadow" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#b8855d"/><stop offset="100%" stop-color="#8a5e3a"/></linearGradient>
+<linearGradient id="skinHi" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#fde4c4"/><stop offset="100%" stop-color="#f4cba6"/></linearGradient>
+<radialGradient id="cheek" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e89a8a" stop-opacity="0.5"/><stop offset="100%" stop-color="#e89a8a" stop-opacity="0"/></radialGradient>
+<linearGradient id="shirt" x1="0%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#6a9bff"/><stop offset="50%" stop-color="#4a7be0"/><stop offset="100%" stop-color="#2a5cc0"/></linearGradient>
+<linearGradient id="shirtDark" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1d3870"/><stop offset="100%" stop-color="#0f2050"/></linearGradient>
+<linearGradient id="shirtHi" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8ab4ff"/><stop offset="100%" stop-color="#6a9bff"/></linearGradient>
+<linearGradient id="shorts" x1="0%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#4a4a4a"/><stop offset="50%" stop-color="#2a2a2a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<linearGradient id="shoe" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="60%" stop-color="#d8d8d8"/><stop offset="100%" stop-color="#7a7a7a"/></linearGradient>
+<linearGradient id="sole" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<linearGradient id="metal" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9a9a9a"/><stop offset="20%" stop-color="#5a5a5a"/><stop offset="60%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<radialGradient id="weightPlate" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#6a6a6a"/><stop offset="60%" stop-color="#2a2a2a"/><stop offset="100%" stop-color="#0a0a0a"/></radialGradient>
+<linearGradient id="hair" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#5a3d23"/><stop offset="50%" stop-color="#3d2817"/><stop offset="100%" stop-color="#2a1a0c"/></linearGradient>
+<linearGradient id="bag" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8a4530"/><stop offset="100%" stop-color="#5a2a18"/></linearGradient>
+<linearGradient id="wall" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ddc8a8"/><stop offset="100%" stop-color="#b8a080"/></linearGradient>
+<linearGradient id="chair" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8a6a4a"/><stop offset="100%" stop-color="#5a4028"/></linearGradient>
+</defs>
+<line x1="20" y1="220" x2="220" y2="220" stroke="#888" stroke-width="2"/>
+<ellipse cx="120" cy="224" rx="100" ry="3" fill="#000" opacity="0.15"/>
+
+<!-- horizontal body in plank position, side view facing right -->
+<!-- head at LEFT side -->
+<ellipse cx="32" cy="118" rx="16" ry="14" fill="url(#skin)"/>
+<!-- hair (top of head from this side angle) -->
+<path d="M 18 110 C 18 96 28 92 38 94 C 46 96 50 102 50 110 L 48 114 C 44 108 36 106 30 110 C 24 112 20 114 18 118 Z" fill="url(#hair)"/>
+<path d="M 22 100 Q 32 96 46 102" fill="none" stroke="#5a3d23" stroke-width="2" opacity="0.7"/>
+<!-- ear -->
+<ellipse cx="34" cy="118" rx="2" ry="3" fill="url(#skinShadow)"/>
+<!-- eye looking forward/down -->
+<ellipse cx="42" cy="118" rx="2" ry="1.4" fill="#fff"/>
+<circle cx="43" cy="118" r="1" fill="#3a4a6a"/>
+<circle cx="43.3" cy="118" r="0.5" fill="#0a0a0a"/>
+<!-- eyebrow -->
+<path d="M 40 114 Q 43 113 46 115" fill="none" stroke="#3d2817" stroke-width="1.5" stroke-linecap="round"/>
+<!-- nose (pointing right/down) -->
+<path d="M 47 120 L 50 124 L 47 125 Z" fill="url(#skin)" stroke="url(#skinShadow)" stroke-width="0.4"/>
+<!-- mouth -->
+<path d="M 42 126 Q 45 127 47 126" fill="none" stroke="#7a3520" stroke-width="1"/>
+<!-- chin/jaw -->
+<path d="M 38 130 Q 44 132 48 128" fill="none" stroke="url(#skinShadow)" stroke-width="0.6"/>
+
+<!-- neck (horizontal, going right from head) -->
+<path d="M 46 124 L 60 122 L 60 132 L 46 130 Z" fill="url(#skin)"/>
+
+<!-- torso horizontal (plank) -->
+<path d="M 60 116 C 80 114, 130 116, 175 122 L 178 138 C 130 142, 80 140, 60 138 Z" fill="url(#shirt)"/>
+<path d="M 62 120 Q 130 124 174 130" fill="none" stroke="url(#shirtHi)" stroke-width="2" opacity="0.5"/>
+<path d="M 60 138 Q 130 142 178 138" fill="none" stroke="url(#shirtDark)" stroke-width="2"/>
+<line x1="100" y1="121" x2="100" y2="139" stroke="url(#shirtDark)" stroke-width="0.5" opacity="0.4"/>
+<line x1="130" y1="123" x2="130" y2="141" stroke="url(#shirtDark)" stroke-width="0.5" opacity="0.4"/>
+
+<!-- supporting arm STRAIGHT DOWN to floor -->
+<ellipse cx="78" cy="128" rx="11" ry="9" fill="url(#skin)"/>
+<ellipse cx="82" cy="124" rx="6" ry="3" fill="url(#skinHi)" opacity="0.6"/>
+<path d="M 70 134 Q 68 165 72 195 L 86 195 Q 90 165 86 134 Z" fill="url(#skin)"/>
+<ellipse cx="78" cy="165" rx="3.5" ry="14" fill="url(#skinHi)" opacity="0.5"/>
+<ellipse cx="78" cy="197" rx="9" ry="4" fill="url(#skinShadow)"/>
+<path d="M 70 198 Q 68 215 72 218 L 86 218 Q 90 215 88 198 Z" fill="url(#skin)"/>
+<!-- hand pressing on floor -->
+<path d="M 65 215 Q 60 220 65 222 L 92 222 Q 96 220 92 215 Z" fill="url(#skin)"/>
+<ellipse cx="78" cy="220" rx="14" ry="2" fill="url(#skinShadow)"/>
+
+<!-- back arm (faded, behind body) -->
+<ellipse cx="92" cy="128" rx="10" ry="7" fill="url(#skinShadow)" opacity="0.55"/>
+<path d="M 84 134 Q 82 165 86 195 L 96 195 Q 98 165 94 134 Z" fill="url(#skinShadow)" opacity="0.55"/>
+
+<!-- shorts -->
+<path d="M 175 117 Q 198 120 198 138 L 175 138 Z" fill="url(#shorts)"/>
+<rect x="173" y="115" width="25" height="3" fill="#0a0a0a"/>
+<line x1="175" y1="138" x2="198" y2="138" stroke="#0a0a0a" stroke-width="1.5"/>
+
+<!-- back leg extending out -->
+<path d="M 198 122 L 226 142 L 230 138 L 200 118 Z" fill="url(#skin)"/>
+<ellipse cx="215" cy="132" rx="14" ry="3.5" fill="url(#skinHi)" opacity="0.5" transform="rotate(35 215 132)"/>
+<!-- knee -->
+<ellipse cx="226" cy="140" rx="6" ry="5" fill="url(#skinShadow)"/>
+<ellipse cx="226" cy="138" rx="4" ry="3" fill="url(#skin)"/>
+<!-- shin -->
+<path d="M 222 142 L 220 215 L 232 215 L 232 142 Z" fill="url(#skin)"/>
+<ellipse cx="226" cy="180" rx="3.5" ry="14" fill="url(#skinHi)" opacity="0.4"/>
+<!-- foot/sneaker -->
+<path d="M 215 215 L 234 215 L 240 220 L 240 222 L 215 222 Z" fill="url(#shoe)" stroke="#222" stroke-width="0.5"/>
+<path d="M 215 220 L 240 220 L 240 222 L 215 222 Z" fill="url(#sole)"/>
+<line x1="222" y1="217" x2="225" y2="219" stroke="#fff" stroke-width="0.6"/>
+<line x1="227" y1="217" x2="230" y2="219" stroke="#fff" stroke-width="0.6"/>
+
+<!-- "hold steady" indicator (no big trajectory - it's an isometric hold) -->
+<text x="80" y="80" font-size="11" fill="#d4906a" font-style="italic" font-family="Georgia" opacity="0.85">hold steady</text>
+<path d="M 80 90 Q 130 86 180 90" fill="none" stroke="#d4906a" stroke-width="1.8" stroke-dasharray="3,3" opacity="0.5"/>
+<polygon points="178,86 184,90 178,94" fill="#d4906a" opacity="0.55"/>
+<polygon points="82,94 76,90 82,86" fill="#d4906a" opacity="0.55"/>
+</svg>

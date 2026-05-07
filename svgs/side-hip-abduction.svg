@@ -1,0 +1,160 @@
+<svg viewBox="0 0 240 280" xmlns="http://www.w3.org/2000/svg"><defs>
+<linearGradient id="skin" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f4cba6"/><stop offset="50%" stop-color="#e8b890"/><stop offset="100%" stop-color="#c89274"/></linearGradient>
+<linearGradient id="skinShadow" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#b8855d"/><stop offset="100%" stop-color="#8a5e3a"/></linearGradient>
+<linearGradient id="skinHi" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#fde4c4"/><stop offset="100%" stop-color="#f4cba6"/></linearGradient>
+<radialGradient id="cheek" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e89a8a" stop-opacity="0.5"/><stop offset="100%" stop-color="#e89a8a" stop-opacity="0"/></radialGradient>
+<linearGradient id="shirt" x1="0%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#6a9bff"/><stop offset="50%" stop-color="#4a7be0"/><stop offset="100%" stop-color="#2a5cc0"/></linearGradient>
+<linearGradient id="shirtDark" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1d3870"/><stop offset="100%" stop-color="#0f2050"/></linearGradient>
+<linearGradient id="shirtHi" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8ab4ff"/><stop offset="100%" stop-color="#6a9bff"/></linearGradient>
+<linearGradient id="shorts" x1="0%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#4a4a4a"/><stop offset="50%" stop-color="#2a2a2a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<linearGradient id="shoe" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="60%" stop-color="#d8d8d8"/><stop offset="100%" stop-color="#7a7a7a"/></linearGradient>
+<linearGradient id="sole" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<linearGradient id="metal" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9a9a9a"/><stop offset="20%" stop-color="#5a5a5a"/><stop offset="60%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+<radialGradient id="weightPlate" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#6a6a6a"/><stop offset="60%" stop-color="#2a2a2a"/><stop offset="100%" stop-color="#0a0a0a"/></radialGradient>
+<linearGradient id="hair" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#5a3d23"/><stop offset="50%" stop-color="#3d2817"/><stop offset="100%" stop-color="#2a1a0c"/></linearGradient>
+<linearGradient id="bag" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8a4530"/><stop offset="100%" stop-color="#5a2a18"/></linearGradient>
+<linearGradient id="wall" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ddc8a8"/><stop offset="100%" stop-color="#b8a080"/></linearGradient>
+<linearGradient id="chair" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8a6a4a"/><stop offset="100%" stop-color="#5a4028"/></linearGradient>
+</defs>
+<line x1="20" y1="252" x2="220" y2="252" stroke="#888" stroke-width="2"/>
+<ellipse cx="120" cy="256" rx="100" ry="3" fill="#000" opacity="0.15"/>
+
+<!-- stair rail -->
+<rect x="14" y="40" width="6" height="212" fill="#5a4028"/>
+
+
+<g transform="translate(-20,0)">
+<ellipse cx="100" cy="48" rx="18" ry="22" fill="url(#skin)"/>
+<ellipse cx="92" cy="56" rx="5" ry="4" fill="url(#cheek)"/>
+<ellipse cx="108" cy="56" rx="5" ry="4" fill="url(#cheek)"/>
+<path d="M 84 64 Q 100 76 116 64" fill="none" stroke="url(#skinShadow)" stroke-width="0.6" opacity="0.5"/>
+<ellipse cx="93" cy="50" rx="3" ry="2" fill="url(#skinShadow)" opacity="0.3"/>
+<ellipse cx="107" cy="50" rx="3" ry="2" fill="url(#skinShadow)" opacity="0.3"/>
+<ellipse cx="93" cy="50" rx="2" ry="1.4" fill="#fff"/>
+<ellipse cx="107" cy="50" rx="2" ry="1.4" fill="#fff"/>
+<circle cx="93" cy="50" r="1.2" fill="#3a4a6a"/>
+<circle cx="107" cy="50" r="1.2" fill="#3a4a6a"/>
+<circle cx="93" cy="50" r="0.6" fill="#0a0a0a"/>
+<circle cx="107" cy="50" r="0.6" fill="#0a0a0a"/>
+<circle cx="93.4" cy="49.6" r="0.3" fill="#fff"/>
+<circle cx="107.4" cy="49.6" r="0.3" fill="#fff"/>
+<line x1="91" y1="48" x2="91" y2="46" stroke="#1a0a05" stroke-width="0.4"/>
+<line x1="93" y1="47.8" x2="93" y2="45.8" stroke="#1a0a05" stroke-width="0.4"/>
+<line x1="95" y1="48" x2="95" y2="46" stroke="#1a0a05" stroke-width="0.4"/>
+<line x1="105" y1="48" x2="105" y2="46" stroke="#1a0a05" stroke-width="0.4"/>
+<line x1="107" y1="47.8" x2="107" y2="45.8" stroke="#1a0a05" stroke-width="0.4"/>
+<line x1="109" y1="48" x2="109" y2="46" stroke="#1a0a05" stroke-width="0.4"/>
+<path d="M 88 44 Q 93 41 97 43" fill="none" stroke="#3d2817" stroke-width="2" stroke-linecap="round"/>
+<path d="M 103 43 Q 107 41 112 44" fill="none" stroke="#3d2817" stroke-width="2" stroke-linecap="round"/>
+<path d="M 96 56 Q 100 62 104 56 L 104 60 Q 100 62 96 60 Z" fill="url(#skinShadow)" opacity="0.4"/>
+<ellipse cx="100" cy="60" rx="0.8" ry="0.5" fill="#3a1a0a"/>
+<ellipse cx="100" cy="60" rx="0.8" ry="0.5" fill="#3a1a0a" transform="translate(-3,0)"/>
+<path d="M 95 67 Q 100 69 105 67" fill="none" stroke="#7a3520" stroke-width="1.4"/>
+<path d="M 94 68 Q 100 71 106 68 Q 103 70 100 70 Q 97 70 94 68 Z" fill="#a85540" opacity="0.6"/>
+<path d="M 80 48 C 76 28, 92 16, 100 16 C 108 16, 124 28, 120 48 L 116 44 C 112 32, 100 28, 88 32 C 84 34, 82 40, 80 48 Z" fill="url(#hair)"/>
+<path d="M 84 28 Q 100 18 116 28" fill="none" stroke="#5a3d23" stroke-width="2.5" opacity="0.85"/>
+<path d="M 86 32 Q 100 22 114 32" fill="none" stroke="#6a4830" stroke-width="1.2" opacity="0.6"/>
+<path d="M 80 48 Q 78 56 80 62" fill="none" stroke="#3d2817" stroke-width="2"/>
+<path d="M 120 48 Q 122 56 120 62" fill="none" stroke="#3d2817" stroke-width="2"/>
+<ellipse cx="80" cy="58" rx="2" ry="3" fill="url(#skinShadow)"/>
+<ellipse cx="120" cy="58" rx="2" ry="3" fill="url(#skinShadow)"/>
+</g>
+<!-- neck -->
+<path d="M 73 70 L 71 82 L 89 82 L 87 70 Z" fill="url(#skin)"/>
+<path d="M 71 78 Q 80 82 89 78 L 89 82 L 71 82 Z" fill="url(#skinShadow)" opacity="0.6"/>
+
+<!-- torso front view -->
+
+<path d="M 55 80
+   C 51 95, 49 125, 53 145
+   C 56 160, 58 172, 63 98
+   L 97 98
+   C 102 172, 104 160, 107 145
+   C 111 125, 109 95, 105 80 Z" fill="url(#shirt)"/>
+<path d="M 57 90 C 55 110 57 140 62 98" fill="none" stroke="url(#shirtHi)" stroke-width="2" opacity="0.5"/>
+<path d="M 63 78 Q 80 74 97 78 L 97 82 Q 80 86 63 82 Z" fill="url(#shirtDark)"/>
+<path d="M 72 94 Q 80 102 90 110" fill="none" stroke="url(#shirtDark)" stroke-width="0.8" opacity="0.5"/>
+<line x1="80" y1="125" x2="80" y2="93" stroke="url(#shirtDark)" stroke-width="0.6" opacity="0.4"/>
+<path d="M 57 88 Q 53 130 60 93" fill="none" stroke="url(#shirtDark)" stroke-width="1.5" opacity="0.6"/>
+<path d="M 103 88 Q 107 130 100 93" fill="none" stroke="url(#shirtDark)" stroke-width="1.5" opacity="0.6"/>
+<path d="M 63 98 Q 80 102 97 98" fill="none" stroke="url(#shirtDark)" stroke-width="2"/>
+
+<!-- arm to rail -->
+<ellipse cx="56" cy="98" rx="11" ry="8" fill="url(#skin)"/>
+<path d="M 54 100 Q 38 110 28 130 L 38 138 Q 48 118 64 108 Z" fill="url(#skin)"/>
+<ellipse cx="32" cy="134" rx="5" ry="4" fill="url(#skinShadow)"/>
+<path d="M 26 130 Q 22 140 22 152 L 32 154 Q 38 144 38 134 Z" fill="url(#skin)"/>
+
+<!-- right arm hanging -->
+<ellipse cx="106" cy="98" rx="11" ry="8" fill="url(#skin)"/>
+<path d="M 104 100 Q 108 130 110 165 L 124 165 Q 122 128 116 102 Z" fill="url(#skin)"/>
+<ellipse cx="115" cy="135" rx="3" ry="14" fill="url(#skinHi)" opacity="0.5"/>
+<ellipse cx="116" cy="167" rx="6" ry="3" fill="url(#skinShadow)"/>
+<path d="M 110 168 Q 108 185 114 192 L 124 192 Q 126 178 124 168 Z" fill="url(#skin)"/>
+
+
+<path d="M 55 178 Q 51 194 57 215 L 103 215 Q 109 194 105 178 Z" fill="url(#shorts)"/>
+<rect x="55" y="178" width="50" height="3" fill="#0a0a0a"/>
+<path d="M 68 180 Q 70 184 72 182" fill="none" stroke="#5a5a5a" stroke-width="0.7"/>
+<path d="M 92 180 Q 90 184 88 182" fill="none" stroke="#5a5a5a" stroke-width="0.7"/>
+<circle cx="69" cy="184" r="0.6" fill="#3a3a3a"/>
+<circle cx="91" cy="184" r="0.6" fill="#3a3a3a"/>
+<rect x="61" y="178" width="2" height="3" fill="#0a0a0a"/>
+<rect x="78" y="178" width="2" height="3" fill="#0a0a0a"/>
+<rect x="97" y="178" width="2" height="3" fill="#0a0a0a"/>
+<rect x="55" y="182" width="2" height="31" fill="#5a5a5a" opacity="0.4"/>
+<rect x="103" y="182" width="2" height="31" fill="#5a5a5a" opacity="0.4"/>
+<line x1="57" y1="215" x2="103" y2="215" stroke="#0a0a0a" stroke-width="1.5"/>
+
+<!-- standing leg -->
+<path d="M 65 218 Q 63 240 65 252 L 82 252 Q 82 240 80 218 Z" fill="url(#skin)"/>
+<ellipse cx="71" cy="234" rx="3" ry="14" fill="url(#skinShadow)" opacity="0.3"/>
+<ellipse cx="78" cy="234" rx="3" ry="14" fill="url(#skinHi)" opacity="0.4"/>
+
+<path d="M 61 250 L 83 250 L 89 246 Q 89 244 85 244 L 61 244 Q 59 244 59 248 Z" fill="url(#shoe)" stroke="#222" stroke-width="0.6"/>
+<path d="M 59 248 L 89 246 L 89 250 L 59 250 Z" fill="url(#sole)"/>
+<path d="M 81 250 L 89 246 Q 87 246 85 247 L 81 249 Z" fill="#e0e0e0" stroke="#222" stroke-width="0.4"/>
+<line x1="70" y1="245" x2="74" y2="247" stroke="#fff" stroke-width="0.7"/>
+<line x1="74" y1="245" x2="78" y2="247" stroke="#fff" stroke-width="0.7"/>
+<line x1="78" y1="245" x2="82" y2="246" stroke="#fff" stroke-width="0.7"/>
+<path d="M 68 247 Q 76 249 84 247" fill="none" stroke="#3460c8" stroke-width="1.4"/>
+<line x1="70" y1="249" x2="70" y2="250" stroke="#3a3a3a" stroke-width="0.3"/>
+<line x1="74" y1="249" x2="74" y2="250" stroke="#3a3a3a" stroke-width="0.3"/>
+<line x1="78" y1="249" x2="78" y2="250" stroke="#3a3a3a" stroke-width="0.3"/>
+
+<!-- abducted leg out to side (right, with ankle weight) -->
+<path d="M 95 215 Q 130 218 165 222 L 165 232 Q 130 228 95 228 Z" fill="url(#skin)"/>
+<ellipse cx="130" cy="220" rx="14" ry="3" fill="url(#skinHi)" opacity="0.5"/>
+<ellipse cx="165" cy="226" rx="6" ry="8" fill="url(#skinShadow)"/>
+<ellipse cx="165" cy="224" rx="4" ry="5" fill="url(#skin)"/>
+<path d="M 165 222 Q 180 222 195 224 L 195 232 Q 180 232 165 232 Z" fill="url(#skin)"/>
+<ellipse cx="180" cy="225" rx="10" ry="2.5" fill="url(#skinHi)" opacity="0.5"/>
+
+<g opacity="1.0">
+<rect x="193" y="225" width="14" height="6" rx="2" fill="#5a3520"/>
+<rect x="194" y="226" width="12" height="4" rx="1.5" fill="#3a1f10"/>
+<text x="200" y="230" font-size="4" fill="#aaa" text-anchor="middle" font-weight="bold">2kg</text>
+<line x1="194" y1="225" x2="194" y2="231" stroke="#2a1208" stroke-width="0.4"/>
+<line x1="206" y1="225" x2="206" y2="231" stroke="#2a1208" stroke-width="0.4"/>
+</g>
+
+<!-- ghost leg at start (down by standing leg) -->
+<g opacity="0.4">
+<path d="M 95 218 Q 93 240 95 250 L 110 250 Q 110 240 108 218 Z" fill="url(#skinShadow)"/>
+
+<g opacity="1.0">
+<rect x="95" y="242" width="14" height="6" rx="2" fill="#5a3520"/>
+<rect x="96" y="243" width="12" height="4" rx="1.5" fill="#3a1f10"/>
+<text x="102" y="247" font-size="4" fill="#aaa" text-anchor="middle" font-weight="bold">2kg</text>
+<line x1="96" y1="242" x2="96" y2="248" stroke="#2a1208" stroke-width="0.4"/>
+<line x1="108" y1="242" x2="108" y2="248" stroke="#2a1208" stroke-width="0.4"/>
+</g>
+</g>
+<text x="85" y="240" font-size="9" fill="#999" font-style="italic" font-family="Georgia">start</text>
+<text x="195" y="218" font-size="9" fill="#b85440" font-style="italic" font-family="Georgia" font-weight="bold">end</text>
+
+<!-- trajectory arrow: from down to side -->
+
+<path d="M 102 240 C 130 240 170 232 200 228" fill="none" stroke="#d4906a" stroke-width="2.5" stroke-dasharray="6,5" opacity="0.5" stroke-linecap="round"/>
+<polygon points="192,222 205,228 195,234" fill="#d4906a" opacity="0.55"/>
+</svg>

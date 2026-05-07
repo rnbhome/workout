@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Strength Log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f1e8;
+    --paper: #fffdf7;
+    --ink: #1d1b16;
+    --ink-muted: #7a7466;
+    --ink-faint: #a8a290;
+    --border: #e8dfc9;
+    --border-strong: #d4c8aa;
+    --stability: #c2922b;
+    --lower: #b85440;
+    --upper-std: #5d8268;
+    --upper-seat: #4a6a8a;
+    --todo: #9a9080;
+    --done-bg: #ede4cf;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.5;
+    padding: 14px 14px 60px; max-width: 720px; margin: 0 auto; font-size: 15px;
+  }
+
+  header {
+    text-align: center; padding: 18px 0 22px;
+    border-bottom: 1px solid var(--border); margin-bottom: 18px; position: relative;
+  }
+  header::before, header::after {
+    content: ''; position: absolute; top: 50%;
+    width: 28px; height: 1px; background: var(--ink-faint);
+  }
+  header::before { left: 28%; }
+  header::after { right: 28%; }
+  h1 {
+    font-family: 'Fraunces', Georgia, serif; font-size: 32px; font-weight: 600;
+    letter-spacing: -0.02em; font-variation-settings: "opsz" 144; font-style: italic;
+  }
+  .tagline {
+    font-size: 10px; color: var(--ink-muted); margin-top: 6px;
+    letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500;
+  }
+
+  .date-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--paper); border: 1px solid var(--border);
+    border-radius: 14px; padding: 10px 8px; margin-bottom: 14px;
+  }
+  .date-nav button {
+    background: none; border: none; font-size: 22px; cursor: pointer;
+    padding: 6px 16px; color: var(--ink); border-radius: 8px; line-height: 1;
+  }
+  .date-nav button:hover { background: var(--bg); }
+  .date-nav button:disabled { opacity: 0.25; cursor: not-allowed; }
+  .date-display { text-align: center; flex: 1; }
+  .current-date { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600; }
+  .day-of-week {
+    font-size: 10px; color: var(--ink-muted); text-transform: uppercase;
+    letter-spacing: 0.15em; margin-top: 2px;
+  }
+  .today-badge {
+    display: inline-block; background: var(--ink); color: var(--paper);
+    font-size: 9px; padding: 2px 6px; border-radius: 4px; margin-left: 6px;
+    letter-spacing: 0.1em; vertical-align: middle; text-transform: uppercase; font-weight: 600;
+  }
+
+  .stats {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px; margin-bottom: 22px;
+  }
+  .stat {
+    background: var(--paper); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 10px; text-align: center;
+  }
+  .stat-label {
+    font-size: 9px; color: var(--ink-muted);
+    text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  .stat-value {
+    font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600;
+    line-height: 1.1; margin-top: 4px;
+  }
+  .stat-sub { font-size: 10px; color: var(--ink-faint); margin-top: 2px; }
+
+  section { margin-bottom: 26px; }
+  .section-header {
+    display: flex; align-items: baseline; gap: 10px;
+    margin-bottom: 10px; padding: 0 4px;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif; font-size: 18px;
+    font-weight: 600; font-style: italic;
+  }
+  .section-rule { flex: 1; height: 1px; background: var(--border); }
+  .section-count { font-size: 11px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+
+  .card {
+    background: var(--paper); border: 1px solid var(--border);
+    border-radius: 14px; padding: 14px; margin-bottom: 10px;
+    position: relative; overflow: hidden; transition: background 0.2s;
+  }
+  .card.done { background: var(--done-bg); }
+  .accent-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+  .accent-stability { background: var(--stability); }
+  .accent-lower { background: var(--lower); }
+  .accent-upper-std { background: var(--upper-std); }
+  .accent-upper-seat { background: var(--upper-seat); }
+  .accent-todo { background: var(--todo); }
+
+  .card-top { display: flex; gap: 12px; align-items: flex-start; }
+  .illustration {
+    flex-shrink: 0; width: 100px; height: 100px;
+    background: var(--bg); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .card.done .illustration { background: rgba(255,255,255,0.4); }
+  .illustration svg { width: 100%; height: 100%; display: block; }
+
+  .card-main { flex: 1; min-width: 0; }
+  .exercise-name {
+    font-family: 'Fraunces', serif; font-size: 16px;
+    font-weight: 600; line-height: 1.25;
+  }
+  .exercise-desc { font-size: 12px; color: var(--ink-muted); margin-top: 3px; line-height: 1.4; }
+  .current-spec {
+    display: inline-block; margin-top: 6px; font-size: 11px;
+    color: var(--ink-muted); background: var(--bg);
+    padding: 3px 8px; border-radius: 4px; font-variant-numeric: tabular-nums;
+  }
+  .card.done .current-spec { background: rgba(255,255,255,0.5); }
+
+  .controls {
+    display: flex; gap: 10px; align-items: center;
+    margin-top: 12px; flex-wrap: wrap;
+  }
+  .check-btn {
+    background: var(--paper); border: 1.5px solid var(--border-strong);
+    border-radius: 8px; padding: 8px 12px;
+    font: inherit; font-size: 12px; font-weight: 500; color: var(--ink);
+    cursor: pointer; display: flex; align-items: center; gap: 6px;
+    transition: all 0.15s; letter-spacing: 0.02em;
+  }
+  .check-btn:hover { border-color: var(--ink); }
+  .card.done .check-btn { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .check-icon { width: 14px; height: 14px; }
+
+  .input-group {
+    display: flex; align-items: center; gap: 4px;
+    background: var(--bg); border-radius: 6px; padding: 4px 8px;
+  }
+  .card.done .input-group { background: rgba(255,255,255,0.5); }
+  .input-group label {
+    font-size: 10px; color: var(--ink-muted);
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .input-group input {
+    width: 36px; padding: 2px 4px; border: none; background: transparent;
+    font: inherit; font-size: 13px; font-weight: 600; text-align: center;
+    color: var(--ink); -moz-appearance: textfield;
+  }
+  .input-group input::-webkit-outer-spin-button,
+  .input-group input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .input-group input:focus { outline: none; }
+  .unit { font-size: 11px; color: var(--ink-muted); font-weight: 500; }
+
+  .expand-btn {
+    background: none; border: none; color: var(--ink-muted);
+    font-size: 11px; padding: 8px 0 0; cursor: pointer;
+    font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .expand-btn:hover { color: var(--ink); }
+  .expand-btn .arrow { transition: transform 0.2s; display: inline-block; }
+  .expand-btn.open .arrow { transform: rotate(90deg); }
+
+  .details {
+    display: none; margin-top: 12px; padding-top: 12px;
+    border-top: 1px dashed var(--border-strong);
+    font-size: 12px; line-height: 1.55;
+  }
+  .details.show { display: block; }
+  .details h4 {
+    font-family: 'Fraunces', serif; font-size: 12px; font-weight: 600;
+    color: var(--ink); margin-bottom: 4px; margin-top: 10px;
+    letter-spacing: 0.02em; text-transform: uppercase;
+  }
+  .details h4:first-child { margin-top: 0; }
+  .details p { color: var(--ink-muted); }
+  .details strong { color: var(--ink); font-weight: 600; }
+  .progression-tier {
+    display: flex; gap: 8px; align-items: baseline;
+    padding: 4px 0; font-size: 12px;
+  }
+  .tier-marker {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 1.5px solid var(--border-strong);
+    flex-shrink: 0; background: var(--paper);
+  }
+  .tier-marker.current { background: var(--ink); border-color: var(--ink); }
+  .tier-marker.done { background: var(--upper-std); border-color: var(--upper-std); }
+  .tier-text { color: var(--ink-muted); }
+  .tier-text.current { color: var(--ink); font-weight: 600; }
+
+  .history-section {
+    background: var(--paper); border: 1px solid var(--border);
+    border-radius: 14px; padding: 14px; margin-top: 22px;
+  }
+  .history-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 4px; margin-top: 10px;
+  }
+  .history-day {
+    aspect-ratio: 1; border-radius: 4px;
+    background: var(--bg); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: var(--ink-muted); cursor: pointer;
+  }
+  .history-day.has-data { background: var(--done-bg); color: var(--ink); font-weight: 600; }
+  .history-day.today { border-color: var(--ink); border-width: 1.5px; }
+
+  footer {
+    text-align: center; padding: 28px 0 8px;
+    color: var(--ink-faint); font-size: 11px; letter-spacing: 0.05em;
+  }
+  footer .ornament { margin-bottom: 8px; font-size: 14px; }
+
+  .loading {
+    text-align: center; padding: 40px;
+    color: var(--ink-muted); font-style: italic;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Strength Log</h1>
+    <div class="tagline">— Daily Training Journal —</div>
+  </header>
+
+  <div class="date-nav">
+    <button id="prev-day" aria-label="Previous day">&lsaquo;</button>
+    <div class="date-display">
+      <div class="current-date" id="date-display">Today</div>
+      <div class="day-of-week" id="day-display"></div>
+    </div>
+    <button id="next-day" aria-label="Next day">&rsaquo;</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">Done</div>
+      <div class="stat-value" id="completed-count">0</div>
+      <div class="stat-sub" id="completed-sub">of 18</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Volume</div>
+      <div class="stat-value" id="volume-count">0</div>
+      <div class="stat-sub">kg lifted</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Streak</div>
+      <div class="stat-value" id="streak-count">1</div>
+      <div class="stat-sub" id="streak-sub">day</div>
+    </div>
+  </div>
+
+  <div id="exercises-container">
+    <div class="loading">Loading&hellip;</div>
+  </div>
+
+  <div class="history-section">
+    <div class="section-header" style="margin-bottom: 4px;">
+      <div class="section-title" style="font-size:15px;">Last 14 days</div>
+      <div class="section-rule"></div>
+    </div>
+    <div class="history-grid" id="history-grid"></div>
+  </div>
+
+  <footer>
+    <div class="ornament">&#x2726;</div>
+    Tap a card to mark it done. Adjust weight per set as you go.
+  </footer>
+
+<script>
+const EXERCISES = [
+  { id: 'pushup-holds', category: 'stability', name: 'Push-up Position Holds',
+    desc: 'Plank hold for scapular & core stability — building toward press-ups.',
+    defaultWeight: 0, defaultSets: 3, defaultReps: 20, repUnit: 'sec',
+    currentSituation: 'Holding the position. Not yet doing actual press-ups.',
+    formCues: 'Straight line from heels to head. Push the floor away — shoulder blades wide. Engage core; do not let hips sag.',
+    progression: [
+      { label: 'Plank holds (current)', current: true },
+      { label: 'Scapular push-ups (shrug-like, arms straight)' },
+      { label: 'Incline press-ups (hands on stairs/wall)' },
+      { label: 'Knee press-ups' },
+      { label: 'Full press-ups' }
+    ] },
+  { id: 'thoracic-rotation', category: 'stability', name: 'Thoracic Rotation',
+    desc: 'On all fours, rotate one arm up to the ceiling, alternating.',
+    defaultWeight: 0, defaultSets: 2, defaultReps: 10, repUnit: 'reps',
+    currentSituation: 'One arm at a time, on all fours.',
+    formCues: 'Drive elbow toward ceiling. Hips stay level. Eyes follow the hand.',
+    progression: [
+      { label: 'Quadruped, hand behind head (current)', current: true },
+      { label: 'Add a slight pause at top' },
+      { label: 'Threading needle variation' },
+      { label: 'Half-kneeling thoracic rotation' }
+    ] },
+  { id: 'leg-extensions', category: 'lower', name: 'Leg Extensions',
+    desc: 'Standing by stairs, lift straight leg forward. Alternating.',
+    defaultWeight: 2, defaultSets: 3, defaultReps: 10, repUnit: 'reps/leg',
+    currentSituation: '2 kg ankle weights, 3 × 10 alternating, standing.',
+    formCues: 'Stand by the rail for balance. Lift the leg straight forward, knee fully extended. Squeeze the quad at the top, lower slowly.',
+    progression: [
+      { label: 'Bodyweight, slow tempo', done: true },
+      { label: '1 kg ankle weights', done: true },
+      { label: '2 kg ankle weights, 3×10 (current)', current: true },
+      { label: '2 kg, 3×15' },
+      { label: '3 kg ankle weights, 3×10' }
+    ] },
+  { id: 'side-hip-abduction', category: 'lower', name: 'Side Hip Abduction',
+    desc: 'Standing on stairs, lift one leg out to the side.',
+    defaultWeight: 2, defaultSets: 3, defaultReps: 10, repUnit: 'reps/leg',
+    currentSituation: '2 kg ankle weights, 3 × 10 each leg.',
+    formCues: 'Hold rail for balance. Lead with the heel, not the toe. Keep torso upright — do not lean.',
+    progression: [
+      { label: 'Bodyweight standing', done: true },
+      { label: '1 kg ankle weights', done: true },
+      { label: '2 kg ankle weights, 3×10 (current)', current: true },
+      { label: '2 kg, 3×15' },
+      { label: '3 kg or add a band' }
+    ] },
+  { id: 'hip-flexion', category: 'lower', name: 'Hip Flexion',
+    desc: 'Standing knee raise — bring thigh up toward chest. Like marching.',
+    defaultWeight: 2, defaultSets: 3, defaultReps: 10, repUnit: 'reps/leg',
+    currentSituation: '2 kg ankle weights, 3 × 10 alternating.',
+    formCues: 'Lift knee to roughly hip height. Stand tall — do not lean back. Slow on the way down.',
+    progression: [
+      { label: 'Bodyweight marches', done: true },
+      { label: '1 kg ankle weights', done: true },
+      { label: '2 kg, 3×10 (current)', current: true },
+      { label: '2 kg, 3×15' },
+      { label: '3 kg, or add a 2-second hold at top' }
+    ] },
+  { id: 'heel-raises', category: 'lower', name: 'Heel Raises',
+    desc: 'Calf raises — push up onto toes, lower with control.',
+    defaultWeight: 0, defaultSets: 3, defaultReps: 15, repUnit: 'reps',
+    currentSituation: 'Bodyweight, both feet.',
+    formCues: 'Push through the big toe and second toe, not the outer edge. Pause at the top, lower slowly.',
+    progression: [
+      { label: 'Two-leg bodyweight (current)', current: true },
+      { label: 'Two-leg, slow 3-sec lower' },
+      { label: 'Off a step (greater range)' },
+      { label: 'Single-leg bodyweight' },
+      { label: 'Single-leg holding 5–10 kg' }
+    ] },
+  { id: 'squats', category: 'lower', name: 'Squats with Backpack',
+    desc: 'Bodyweight squat with a loaded backpack on shoulders.',
+    defaultWeight: 12.5, defaultSets: 3, defaultReps: 15, repUnit: 'reps',
+    currentSituation: 'Backpack ~10–15 kg, 3 × 15.',
+    formCues: 'Feet shoulder-width, toes slightly out. Sit back into hips. Keep chest up; knees track over toes. Drive through whole foot.',
+    progression: [
+      { label: 'Bodyweight squats', done: true },
+      { label: 'Backpack 5–10 kg', done: true },
+      { label: 'Backpack 10–15 kg, 3×15 (current)', current: true },
+      { label: 'Backpack 15–20 kg, 3×12' },
+      { label: 'Goblet squat with single weight 10–15 kg' },
+      { label: 'Add tempo: 3-sec descent, 1-sec pause' }
+    ] },
+  { id: 'lunges', category: 'lower', name: 'Lunges',
+    desc: 'Step forward, lower until both knees ~90°, push back.',
+    defaultWeight: 0, defaultSets: 3, defaultReps: 10, repUnit: 'reps/leg',
+    currentSituation: 'Not yet started — to add to routine.',
+    formCues: 'Long step forward. Drop straight down — front knee over ankle, back knee toward floor. Torso upright.',
+    progression: [
+      { label: 'Static lunges, hold rail (start here)', current: true },
+      { label: 'Bodyweight forward lunges, 3×10 each' },
+      { label: 'Reverse lunges (easier on knees)' },
+      { label: 'Walking lunges' },
+      { label: 'Add backpack 5–10 kg' }
+    ] },
+  { id: 'shoulder-flexion', category: 'upper-std', name: 'Shoulder Flexion',
+    desc: 'Standing front raise — arm goes straight up in front of you.',
+    defaultWeight: 1, defaultSets: 2, defaultReps: 10, repUnit: 'reps/arm',
+    currentSituation: '1 kg pink weight, arm raises to overhead in front.',
+    formCues: 'Thumb leads. Raise to about ear-height (or higher if shoulder allows). Slow on the way down.',
+    progression: [
+      { label: 'No weight, range of motion', done: true },
+      { label: '1 kg pink, 2×10 (current)', current: true },
+      { label: '1 kg, 3×12' },
+      { label: '2 kg yellow' },
+      { label: '2 kg + slow 3-sec lower' }
+    ] },
+  { id: 'shoulder-abduction-standing', category: 'upper-std', name: 'Shoulder Abduction',
+    desc: 'Standing lateral raise — arm goes up to the side, like a T.',
+    defaultWeight: 1, defaultSets: 2, defaultReps: 10, repUnit: 'reps/arm',
+    currentSituation: '1 kg pink weight.',
+    formCues: 'Lead with the elbow, slight bend. Shoulder blades down — do not shrug. Stop at about shoulder height.',
+    progression: [
+      { label: 'No weight', done: true },
+      { label: '1 kg pink, 2×10 (current)', current: true },
+      { label: '1 kg, 3×12' },
+      { label: '2 kg yellow, 2×10' },
+      { label: '2 kg, 3×12' }
+    ] },
+  { id: 'pec-stretch', category: 'upper-std', name: 'Pec Stretch on Wall',
+    desc: 'Forearm against wall, rotate body away to stretch the chest.',
+    defaultWeight: 0, defaultSets: 2, defaultReps: 30, repUnit: 'sec/side',
+    currentSituation: 'Wall stretch, both sides.',
+    formCues: 'Forearm flat against wall, elbow at shoulder height. Step forward, gently rotate torso away. Feel stretch across chest, not in shoulder joint.',
+    progression: [
+      { label: '30-sec hold per side (current)', current: true },
+      { label: '45-sec hold per side' },
+      { label: 'Doorway stretch (both arms at once)' },
+      { label: 'Add overhead tricep + pec combo' }
+    ] },
+  { id: 'shoulder-external-rotation', category: 'upper-seat', name: 'Shoulder External Rotation',
+    desc: 'Seated, elbow at side bent 90°, rotate forearm outward.',
+    defaultWeight: 2, defaultSets: 2, defaultReps: 12, repUnit: 'reps/arm',
+    currentSituation: '2 kg yellow weight.',
+    formCues: 'Elbow tucked at side throughout. Forearm rotates out away from belly. Slow and controlled — small movement.',
+    progression: [
+      { label: '1 kg pink', done: true },
+      { label: '2 kg yellow (current)', current: true },
+      { label: '2 kg, 3×12' },
+      { label: '3 kg' },
+      { label: 'Resistance band side-lying variation' }
+    ] },
+  { id: 'shoulder-abduction-90', category: 'upper-seat', name: 'Shoulder Abduction to 90°',
+    desc: 'Seated lateral raise, only up to shoulder height. Shoulders retracted.',
+    defaultWeight: 2, defaultSets: 2, defaultReps: 10, repUnit: 'reps/arm',
+    currentSituation: '2 kg yellow, only to 90°, shoulders pulled back.',
+    formCues: 'Sit tall, shoulder blades squeezed back. Arm rises out to the side, stop at horizontal. No higher.',
+    progression: [
+      { label: '1 kg pink to 90°', done: true },
+      { label: '2 kg yellow to 90° (current)', current: true },
+      { label: '2 kg, 3×12 to 90°' },
+      { label: '2 kg full ROM (above 90°)' },
+      { label: '3 kg' }
+    ] },
+  { id: 'bicep-curls', category: 'upper-seat', name: 'Bicep Curls',
+    desc: 'Elbow fixed on chair arm, curl from full extension to full flexion.',
+    defaultWeight: 4, defaultSets: 2, defaultReps: 10, repUnit: 'reps/arm',
+    currentSituation: '4 kg, elbow fixed, full range of motion.',
+    formCues: 'Start arm fully straight (elbow extended). Curl all the way up. Lower slowly, do not bounce out of the bottom.',
+    progression: [
+      { label: '2 kg yellow', done: true },
+      { label: '3 kg', done: true },
+      { label: '4 kg, full ROM (current)', current: true },
+      { label: '4 kg, 3×12' },
+      { label: '5 kg' }
+    ] },
+  { id: 'pronation-supination', category: 'upper-seat', name: 'Forearm Pronation/Supination',
+    desc: 'Elbow on chair, rotate the forearm — palm up to palm down.',
+    defaultWeight: 4, defaultSets: 2, defaultReps: 12, repUnit: 'reps/arm',
+    currentSituation: '4 kg, full rotation both ways.',
+    formCues: 'Elbow stays at 90°, fixed. Hold weight by one end so it acts as a lever. Slow rotation; do not snap.',
+    progression: [
+      { label: '2 kg, mid-grip', done: true },
+      { label: '4 kg, end-grip (current)', current: true },
+      { label: '4 kg, 3×12' },
+      { label: '5 kg end-grip' }
+    ] },
+  { id: 'wrist-flex-ext', category: 'upper-seat', name: 'Wrist Flexion / Extension',
+    desc: 'Forearm on chair, hand off the edge — flex wrist up and down.',
+    defaultWeight: 4, defaultSets: 2, defaultReps: 12, repUnit: 'reps/arm',
+    currentSituation: '4 kg, both flexion (palm up) and extension (palm down).',
+    formCues: 'Forearm fully supported. Only the wrist moves. Full range — let the weight stretch the wrist at the bottom.',
+    progression: [
+      { label: '2 kg both directions', done: true },
+      { label: '4 kg both directions (current)', current: true },
+      { label: '4 kg, 3×12 each direction' },
+      { label: '5 kg flexion (extension stays at 4)' }
+    ] },
+  { id: 'posterior-fly', category: 'todo', name: 'Posterior Fly',
+    desc: 'Bent at hips, raise arms out to sides — squeezes rear delts and upper back.',
+    defaultWeight: 1, defaultSets: 2, defaultReps: 10, repUnit: 'reps',
+    currentSituation: 'Not yet started — planned with 1 kg pink.',
+    formCues: 'Hinge at hips, flat back, arms hanging. Lift arms out to sides, squeeze shoulder blades together. Slow and controlled.',
+    progression: [
+      { label: 'No weight, learn the pattern', current: true },
+      { label: '1 kg pink, 2×10' },
+      { label: '1 kg, 3×12' },
+      { label: '2 kg yellow' },
+      { label: '2 kg, 3×12 with 2-sec squeeze at top' }
+    ] },
+  { id: 'shoulder-internal-rotation', category: 'todo', name: 'Shoulder Internal Rotation (Behind Back)',
+    desc: 'Hand behind lower back, lift weight away from body.',
+    defaultWeight: 1, defaultSets: 2, defaultReps: 10, repUnit: 'reps/arm',
+    currentSituation: 'Not yet started — planned with 1 kg.',
+    formCues: 'Hand behind small of back, palm facing out. Lift weight straight back, away from body. Tiny movement — quality over range.',
+    progression: [
+      { label: 'No weight, learn the motion', current: true },
+      { label: '1 kg pink, 2×10' },
+      { label: '1 kg, 3×12' },
+      { label: 'Switch to band against doorframe (better setup)' },
+      { label: '2 kg with band' }
+    ] }
+];
+
+const CATEGORIES = [
+  { id: 'stability', label: 'Stability & Mobility', accent: 'accent-stability' },
+  { id: 'lower', label: 'Lower Body', accent: 'accent-lower' },
+  { id: 'upper-std', label: 'Upper Body — Standing', accent: 'accent-upper-std' },
+  { id: 'upper-seat', label: 'Upper Body — Seated', accent: 'accent-upper-seat' },
+  { id: 'todo', label: 'New / To Add', accent: 'accent-todo' }
+];
+
+const TODAYS_DONE = {
+  'pushup-holds':            { done: true, weight: 0,    sets: 3, reps: 20 },
+  'thoracic-rotation':       { done: true, weight: 0,    sets: 2, reps: 10 },
+  'leg-extensions':          { done: true, weight: 2,    sets: 3, reps: 10 },
+  'side-hip-abduction':      { done: true, weight: 2,    sets: 3, reps: 10 },
+  'hip-flexion':             { done: true, weight: 2,    sets: 3, reps: 10 },
+  'shoulder-flexion':        { done: true, weight: 1,    sets: 2, reps: 10 },
+  'shoulder-abduction-standing': { done: true, weight: 1, sets: 2, reps: 10 },
+  'heel-raises':             { done: true, weight: 0,    sets: 3, reps: 15 },
+  'squats':                  { done: true, weight: 12.5, sets: 3, reps: 15 },
+  'pec-stretch':             { done: true, weight: 0,    sets: 2, reps: 30 }
+};
+
+let currentDate = new Date(2026, 4, 5);
+const TODAY = new Date(2026, 4, 5);
+let dayLog = {};
+const svgCache = {};
+
+function dateKey(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+function isSameDay(a, b) { return dateKey(a) === dateKey(b); }
+function isToday(d) { return isSameDay(d, TODAY); }
+function isFuture(d) { return d > TODAY; }
+function formatDate(d) {
+  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+function formatDay(d) { return d.toLocaleDateString('en-US', { weekday: 'long' }); }
+
+async function loadDay(d) {
+  const key = `log:${dateKey(d)}`;
+  try {
+    const raw = localStorage.getItem(key);
+    if (raw) return JSON.parse(raw);
+  } catch (err) {}
+  if (isToday(d)) return { ...TODAYS_DONE };
+  return {};
+}
+async function saveDay(d, log) {
+  try { localStorage.setItem(`log:${dateKey(d)}`, JSON.stringify(log)); }
+  catch (err) { console.error('Save failed', err); }
+}
+async function getDayKeys() {
+  const keys = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith('log:')) keys.push(k);
+    }
+  } catch (err) {}
+  return keys;
+}
+
+async function loadSvg(id) {
+  if (svgCache[id] !== undefined) return svgCache[id];
+  try {
+    const res = await fetch(`svgs/${id}.svg`);
+    if (!res.ok) throw new Error('not found');
+    const text = await res.text();
+    svgCache[id] = text;
+    return text;
+  } catch (err) {
+    svgCache[id] = '';
+    return '';
+  }
+}
+
+function renderExerciseShell(ex) {
+  const cat = CATEGORIES.find(c => c.id === ex.category);
+  const log = dayLog[ex.id] || { done: false, weight: ex.defaultWeight, sets: ex.defaultSets, reps: ex.defaultReps };
+  const isDone = log.done;
+  const weight = log.weight ?? ex.defaultWeight;
+  const sets = log.sets ?? ex.defaultSets;
+  const reps = log.reps ?? ex.defaultReps;
+
+  const specText = ex.defaultWeight > 0
+    ? `${ex.defaultWeight} kg · ${ex.defaultSets}×${ex.defaultReps} ${ex.repUnit}`
+    : `Bodyweight · ${ex.defaultSets}×${ex.defaultReps} ${ex.repUnit}`;
+
+  const progressionHTML = ex.progression.map(t => `
+    <div class="progression-tier">
+      <div class="tier-marker ${t.current ? 'current' : ''} ${t.done ? 'done' : ''}"></div>
+      <div class="tier-text ${t.current ? 'current' : ''}">${t.label}</div>
+    </div>`).join('');
+
+  return `
+    <div class="card ${isDone ? 'done' : ''}" data-id="${ex.id}">
+      <div class="accent-bar ${cat.accent}"></div>
+      <div class="card-top">
+        <div class="illustration" data-svg="${ex.id}"></div>
+        <div class="card-main">
+          <div class="exercise-name">${ex.name}</div>
+          <div class="exercise-desc">${ex.desc}</div>
+          <div class="current-spec">${specText}</div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="check-btn" data-action="toggle">
+          ${isDone
+            ? `<svg class="check-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,8 7,12 13,4"/></svg> Done`
+            : `<svg class="check-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="6"/></svg> Mark done`}
+        </button>
+        <div class="input-group">
+          <label>Wt</label>
+          <input type="number" step="0.5" min="0" value="${weight}" data-field="weight" data-id="${ex.id}">
+          <span class="unit">kg</span>
+        </div>
+        <div class="input-group">
+          <label>Sets</label>
+          <input type="number" step="1" min="0" value="${sets}" data-field="sets" data-id="${ex.id}">
+        </div>
+        <div class="input-group">
+          <label>Reps</label>
+          <input type="number" step="1" min="0" value="${reps}" data-field="reps" data-id="${ex.id}">
+        </div>
+      </div>
+      <button class="expand-btn" data-action="expand">
+        <span class="arrow">&rsaquo;</span> Form &amp; progression
+      </button>
+      <div class="details">
+        <h4>Form cues</h4>
+        <p>${ex.formCues}</p>
+        <h4>Current</h4>
+        <p>${ex.currentSituation}</p>
+        <h4>How to progress</h4>
+        ${progressionHTML}
+      </div>
+    </div>`;
+}
+
+async function injectSvgs() {
+  const slots = document.querySelectorAll('.illustration[data-svg]');
+  await Promise.all(Array.from(slots).map(async (slot) => {
+    const id = slot.dataset.svg;
+    const svg = await loadSvg(id);
+    if (svg) slot.innerHTML = svg;
+  }));
+}
+
+function renderAll() {
+  const container = document.getElementById('exercises-container');
+  let html = '';
+  for (const cat of CATEGORIES) {
+    const exs = EXERCISES.filter(e => e.category === cat.id);
+    if (exs.length === 0) continue;
+    const doneCount = exs.filter(e => dayLog[e.id]?.done).length;
+    html += `
+      <section>
+        <div class="section-header">
+          <div class="section-title">${cat.label}</div>
+          <div class="section-rule"></div>
+          <div class="section-count">${doneCount} / ${exs.length}</div>
+        </div>
+        ${exs.map(renderExerciseShell).join('')}
+      </section>`;
+  }
+  container.innerHTML = html;
+  attachCardListeners();
+  updateStats();
+  injectSvgs();
+}
+
+function attachCardListeners() {
+  document.querySelectorAll('[data-action="toggle"]').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const card = e.target.closest('.card');
+      const id = card.dataset.id;
+      if (!dayLog[id]) {
+        const ex = EXERCISES.find(x => x.id === id);
+        dayLog[id] = { done: false, weight: ex.defaultWeight, sets: ex.defaultSets, reps: ex.defaultReps };
+      }
+      dayLog[id].done = !dayLog[id].done;
+      await saveDay(currentDate, dayLog);
+      renderAll();
+      renderHistory();
+    });
+  });
+  document.querySelectorAll('input[data-field]').forEach(input => {
+    input.addEventListener('change', async (e) => {
+      const id = e.target.dataset.id;
+      const field = e.target.dataset.field;
+      const val = parseFloat(e.target.value) || 0;
+      if (!dayLog[id]) {
+        const ex = EXERCISES.find(x => x.id === id);
+        dayLog[id] = { done: false, weight: ex.defaultWeight, sets: ex.defaultSets, reps: ex.defaultReps };
+      }
+      dayLog[id][field] = val;
+      await saveDay(currentDate, dayLog);
+      updateStats();
+    });
+  });
+  document.querySelectorAll('[data-action="expand"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const card = e.target.closest('.card');
+      card.querySelector('.details').classList.toggle('show');
+      btn.classList.toggle('open');
+    });
+  });
+}
+
+function updateStats() {
+  const done = Object.values(dayLog).filter(v => v.done).length;
+  document.getElementById('completed-count').textContent = done;
+  document.getElementById('completed-sub').textContent = `of ${EXERCISES.length}`;
+  let volume = 0;
+  for (const ex of EXERCISES) {
+    const log = dayLog[ex.id];
+    if (log?.done) volume += (log.weight || 0) * (log.sets || 0) * (log.reps || 0);
+  }
+  document.getElementById('volume-count').textContent = Math.round(volume);
+}
+
+function updateDateDisplay() {
+  const display = document.getElementById('date-display');
+  const dayDisplay = document.getElementById('day-display');
+  if (isToday(currentDate)) {
+    display.innerHTML = `${formatDate(currentDate)} <span class="today-badge">Today</span>`;
+  } else {
+    display.textContent = formatDate(currentDate);
+  }
+  dayDisplay.textContent = formatDay(currentDate);
+  document.getElementById('next-day').disabled = isToday(currentDate) || isFuture(currentDate);
+}
+
+async function changeDay(delta) {
+  const newDate = new Date(currentDate);
+  newDate.setDate(newDate.getDate() + delta);
+  if (isFuture(newDate)) return;
+  currentDate = newDate;
+  dayLog = await loadDay(currentDate);
+  updateDateDisplay();
+  renderAll();
+}
+
+async function renderHistory() {
+  const grid = document.getElementById('history-grid');
+  const keys = await getDayKeys();
+  const dataDates = new Set(keys.map(k => k.replace('log:', '')));
+  let html = '';
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date(TODAY);
+    d.setDate(d.getDate() - i);
+    const key = dateKey(d);
+    const hasData = dataDates.has(key);
+    const todayCls = isToday(d) ? 'today' : '';
+    const dataCls = hasData ? 'has-data' : '';
+    html += `<div class="history-day ${dataCls} ${todayCls}" data-date="${key}" title="${formatDate(d)}">${d.getDate()}</div>`;
+  }
+  grid.innerHTML = html;
+  grid.querySelectorAll('.history-day').forEach(el => {
+    el.addEventListener('click', async () => {
+      const [y, m, day] = el.dataset.date.split('-').map(Number);
+      currentDate = new Date(y, m - 1, day);
+      dayLog = await loadDay(currentDate);
+      updateDateDisplay();
+      renderAll();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+}
+
+async function init() {
+  document.getElementById('prev-day').addEventListener('click', () => changeDay(-1));
+  document.getElementById('next-day').addEventListener('click', () => changeDay(1));
+  dayLog = await loadDay(currentDate);
+  if (isToday(currentDate)) await saveDay(currentDate, dayLog);
+  updateDateDisplay();
+  renderAll();
+  await renderHistory();
+}
+
+init();
+</script>
+</body>
+</html>
