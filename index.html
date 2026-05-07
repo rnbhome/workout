@@ -127,8 +127,19 @@
   .card.done .illustration { background: rgba(255,255,255,0.4); }
   .illustration svg { width: 100%; height: 100%; display: block; }
   .illustration img {
+    position: absolute; inset: 0;
     width: 100%; height: 100%; display: block;
     object-fit: contain; background: var(--paper);
+  }
+  .illustration img.frame-b {
+    animation: frame-swap 1.6s steps(1, end) infinite;
+  }
+  @keyframes frame-swap {
+    0%, 50%   { opacity: 0; }
+    50.01%, 100% { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .illustration img.frame-b { animation: none; opacity: 0; }
   }
 
   .card-main { flex: 1; min-width: 0; }
@@ -1492,7 +1503,7 @@ function renderExerciseShell(ex) {
     <div class="card ${isDone ? 'done' : ''}" data-id="${ex.id}">
       <div class="accent-bar ${cat.accent}"></div>
       <div class="card-top">
-        <div class="illustration" data-svg="${ex.id}"><img src="exercise-imgs/${ex.id}.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove();"></div>
+        <div class="illustration" data-svg="${ex.id}"><img class="frame-a" src="exercise-imgs/${ex.id}.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove();"><img class="frame-b" src="exercise-imgs/${ex.id}-1.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove();"></div>
         <div class="card-main">
           <div class="exercise-name">${ex.name}${isPR ? '<span class="chip pr">★ PR</span>' : ''}</div>
           <div class="exercise-desc">${ex.desc}</div>
