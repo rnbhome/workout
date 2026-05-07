@@ -358,6 +358,57 @@
   }
   .notes textarea:focus { outline: none; }
   .notes textarea::placeholder { color: var(--ink-faint); font-style: italic; }
+
+  /* Sync bar + panel */
+  .sync-bar {
+    display: flex; justify-content: center; align-items: center;
+    margin: -8px 0 12px;
+  }
+  .sync-pill {
+    font-size: 10px; color: var(--ink-muted);
+    background: var(--paper); border: 1px solid var(--border);
+    padding: 3px 9px; border-radius: 999px; cursor: pointer;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: inherit;
+  }
+  .sync-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-faint); flex-shrink: 0; }
+  .sync-pill.synced .dot { background: var(--upper-std); }
+  .sync-pill.syncing .dot { background: var(--stability); animation: pulse 1.2s infinite; }
+  .sync-pill.error .dot { background: var(--lower); }
+  .sync-pill.local-only .dot { background: var(--ink-faint); }
+
+  .sync-panel {
+    background: var(--paper); border: 1px solid var(--border);
+    border-radius: 14px; padding: 14px; margin-bottom: 12px;
+    display: none; font-size: 13px;
+  }
+  .sync-panel.show { display: block; }
+  .sync-panel h4 {
+    font-family: 'Fraunces', serif; font-size: 14px; font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .sync-panel p { color: var(--ink-muted); margin-bottom: 10px; font-size: 12px; line-height: 1.5; }
+  .sync-panel a { color: var(--ink); }
+  .sync-panel code {
+    background: var(--bg); padding: 1px 5px; border-radius: 4px;
+    font-size: 11px; font-family: ui-monospace, SFMono-Regular, monospace;
+  }
+  .sync-panel input {
+    width: 100%; padding: 8px 10px; font: inherit; font-size: 12px;
+    border: 1px solid var(--border); border-radius: 8px; background: var(--bg);
+    color: var(--ink); margin-bottom: 8px;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+  }
+  .sync-panel input:focus { outline: none; border-color: var(--ink); }
+  .sync-panel .btn-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .sync-panel button {
+    border: 1.5px solid var(--border-strong); background: var(--bg);
+    border-radius: 8px; padding: 6px 12px; font: inherit; font-size: 12px;
+    cursor: pointer; color: var(--ink);
+  }
+  .sync-panel button.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .sync-panel button:hover { border-color: var(--ink); }
 </style>
 </head>
 <body>
@@ -382,6 +433,22 @@
       <div class="day-of-week" id="day-display"></div>
     </div>
     <button id="next-day" aria-label="Next day">&rsaquo;</button>
+  </div>
+
+  <div class="sync-bar">
+    <button class="sync-pill local-only" id="sync-pill"><span class="dot"></span><span id="sync-text">Local only</span></button>
+  </div>
+  <div class="sync-panel" id="sync-panel">
+    <h4>Sync to GitHub</h4>
+    <p>Saves your workouts to <code>data/state.json</code> in this repo, so they sync across devices.
+       Create a fine-grained PAT at <a href="https://github.com/settings/personal-access-tokens" target="_blank" rel="noopener">github.com/settings/personal-access-tokens</a>
+       with <strong>Contents: Read &amp; write</strong> scoped to <code>rnbhome/workout</code>.</p>
+    <input id="token-input" type="password" placeholder="github_pat_..." autocomplete="off">
+    <div class="btn-row">
+      <button class="primary" id="save-token">Save &amp; sync</button>
+      <button id="sync-now">Sync now</button>
+      <button id="clear-token">Clear token</button>
+    </div>
   </div>
 
   <div class="stats">
@@ -685,40 +752,283 @@ function formatDate(d) {
 function formatDay(d) { return d.toLocaleDateString('en-US', { weekday: 'long' }); }
 
 async function loadDay(d) {
-  const key = `log:${dateKey(d)}`;
-  try {
-    const raw = localStorage.getItem(key);
-    if (raw) return JSON.parse(raw);
-  } catch (err) {}
-  return {};
+  return STATE.logs[dateKey(d)] || {};
 }
 async function saveDay(d, log) {
-  try { localStorage.setItem(`log:${dateKey(d)}`, JSON.stringify(log)); }
-  catch (err) { console.error('Save failed', err); }
+  const k = dateKey(d);
+  if (Object.keys(log).length === 0) delete STATE.logs[k];
+  else STATE.logs[k] = log;
+  schedulePush();
 }
-async function getDayKeys() {
-  const keys = [];
+// ----- State store: single object cached locally, optionally synced to GitHub -----
+
+const REPO_OWNER = 'rnbhome';
+const REPO_NAME = 'workout';
+const STATE_PATH = 'data/state.json';
+const STATE_BRANCH = 'main';
+const STATE_CACHE_KEY = 'wo_state';
+const TOKEN_KEY = 'wo_token';
+
+function defaultState() { return { version: 1, logs: {}, notes: {}, tiers: {} }; }
+let STATE = defaultState();
+let blobSha = null;
+let saveTimer = null;
+let saveQueue = Promise.resolve();
+let syncStatus = 'local-only';
+let lastSyncedAt = 0;
+
+function getToken() { try { return localStorage.getItem(TOKEN_KEY); } catch (e) { return null; } }
+function setToken(t) {
+  try {
+    if (t) localStorage.setItem(TOKEN_KEY, t);
+    else localStorage.removeItem(TOKEN_KEY);
+  } catch (e) {}
+}
+
+function persistLocal() {
+  try { localStorage.setItem(STATE_CACHE_KEY, JSON.stringify(STATE)); } catch (e) {}
+}
+
+function loadLocal() {
+  try {
+    const raw = localStorage.getItem(STATE_CACHE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      STATE = { ...defaultState(), ...parsed };
+      STATE.logs = STATE.logs || {};
+      STATE.notes = STATE.notes || {};
+      STATE.tiers = STATE.tiers || {};
+    }
+  } catch (e) {}
+}
+
+function migrateLegacyKeys() {
+  let migrated = 0;
+  const toRemove = [];
   try {
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i);
-      if (k && k.startsWith('log:')) keys.push(k);
+      if (!k) continue;
+      if (k.startsWith('log:')) {
+        const date = k.slice(4);
+        if (!STATE.logs[date]) {
+          try { STATE.logs[date] = JSON.parse(localStorage.getItem(k)); migrated++; } catch (e) {}
+        }
+        toRemove.push(k);
+      } else if (k.startsWith('notes:')) {
+        const date = k.slice(6);
+        if (!(date in STATE.notes)) {
+          STATE.notes[date] = localStorage.getItem(k); migrated++;
+        }
+        toRemove.push(k);
+      } else if (k.startsWith('tier:')) {
+        const id = k.slice(5);
+        if (!(id in STATE.tiers)) {
+          const v = parseInt(localStorage.getItem(k), 10);
+          if (!Number.isNaN(v)) { STATE.tiers[id] = v; migrated++; }
+        }
+        toRemove.push(k);
+      }
     }
-  } catch (err) {}
-  return keys;
+    toRemove.forEach(k => localStorage.removeItem(k));
+  } catch (e) {}
+  if (migrated) persistLocal();
+  return migrated;
+}
+
+function mergeRemoteIntoLocal(remote) {
+  if (!remote) return;
+  for (const [k, v] of Object.entries(remote.logs || {})) {
+    if (!STATE.logs[k]) STATE.logs[k] = v;
+  }
+  for (const [k, v] of Object.entries(remote.notes || {})) {
+    if (!(k in STATE.notes)) STATE.notes[k] = v;
+  }
+  for (const [k, v] of Object.entries(remote.tiers || {})) {
+    if (!(k in STATE.tiers)) STATE.tiers[k] = v;
+  }
+}
+
+function b64encode(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function b64decode(b64) {
+  return decodeURIComponent(escape(atob(b64.replace(/\n/g, ''))));
+}
+
+async function ghLoad() {
+  const token = getToken();
+  if (!token) return null;
+  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${STATE_PATH}?ref=${STATE_BRANCH}&t=${Date.now()}`;
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' },
+    cache: 'no-store'
+  });
+  if (res.status === 404) { blobSha = null; return defaultState(); }
+  if (!res.ok) throw new Error(`GitHub load ${res.status}`);
+  const json = await res.json();
+  blobSha = json.sha;
+  try { return JSON.parse(b64decode(json.content)); }
+  catch (e) { return defaultState(); }
+}
+
+async function ghSaveOnce() {
+  const token = getToken();
+  if (!token) return;
+  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${STATE_PATH}`;
+  const body = {
+    message: `state: update ${dateKey(new Date())}`,
+    content: b64encode(JSON.stringify(STATE, null, 2) + '\n'),
+    branch: STATE_BRANCH
+  };
+  if (blobSha) body.sha = blobSha;
+  const res = await fetch(url, {
+    method: 'PUT',
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github+json' },
+    body: JSON.stringify(body)
+  });
+  if (res.status === 409 || res.status === 422) {
+    // Conflict or stale sha — reload, merge remote-only keys, retry once
+    const remote = await ghLoad();
+    mergeRemoteIntoLocal(remote);
+    persistLocal();
+    const body2 = { ...body, content: b64encode(JSON.stringify(STATE, null, 2) + '\n') };
+    if (blobSha) body2.sha = blobSha;
+    const res2 = await fetch(url, {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github+json' },
+      body: JSON.stringify(body2)
+    });
+    if (!res2.ok) throw new Error(`GitHub save retry ${res2.status}`);
+    const j2 = await res2.json();
+    blobSha = j2.content?.sha || blobSha;
+    return;
+  }
+  if (!res.ok) {
+    const txt = await res.text().catch(() => '');
+    throw new Error(`GitHub save ${res.status} ${txt.slice(0, 120)}`);
+  }
+  const json = await res.json();
+  blobSha = json.content?.sha || blobSha;
+}
+
+function setSyncStatus(s) { syncStatus = s; updateSyncBadge(); }
+
+function schedulePush() {
+  persistLocal();
+  if (!getToken()) { setSyncStatus('local-only'); return; }
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    saveQueue = saveQueue.then(async () => {
+      setSyncStatus('syncing');
+      try {
+        await ghSaveOnce();
+        lastSyncedAt = Date.now();
+        setSyncStatus('synced');
+      } catch (err) {
+        console.error('Sync failed:', err);
+        setSyncStatus('error');
+      }
+    }).catch(() => {});
+  }, 1500);
+}
+
+function relTime(ts) {
+  if (!ts) return 'just now';
+  const s = Math.round((Date.now() - ts) / 1000);
+  if (s < 5) return 'just now';
+  if (s < 60) return `${s}s ago`;
+  if (s < 3600) return `${Math.floor(s/60)}m ago`;
+  return `${Math.floor(s/3600)}h ago`;
+}
+
+function updateSyncBadge() {
+  const pill = document.getElementById('sync-pill');
+  const text = document.getElementById('sync-text');
+  if (!pill || !text) return;
+  pill.classList.remove('synced', 'syncing', 'error', 'local-only');
+  pill.classList.add(syncStatus);
+  switch (syncStatus) {
+    case 'syncing': text.textContent = 'Syncing…'; break;
+    case 'synced': text.textContent = 'Synced ' + relTime(lastSyncedAt); break;
+    case 'error': text.textContent = 'Sync error — tap to retry'; break;
+    case 'local-only':
+    default: text.textContent = getToken() ? 'Idle' : 'Local only — tap to set up sync'; break;
+  }
+}
+
+function setupSyncUI() {
+  const pill = document.getElementById('sync-pill');
+  const panel = document.getElementById('sync-panel');
+  pill.addEventListener('click', () => panel.classList.toggle('show'));
+
+  document.getElementById('save-token').addEventListener('click', async () => {
+    const inp = document.getElementById('token-input');
+    const t = inp.value.trim();
+    if (!t) return;
+    setToken(t);
+    inp.value = '';
+    panel.classList.remove('show');
+    setSyncStatus('syncing');
+    try {
+      const remote = await ghLoad();
+      mergeRemoteIntoLocal(remote);
+      persistLocal();
+      await ghSaveOnce();
+      lastSyncedAt = Date.now();
+      setSyncStatus('synced');
+      dayLog = STATE.logs[dateKey(currentDate)] || {};
+      await loadNotes();
+      renderAll();
+      await renderHeatmap();
+      showToast('Synced to GitHub');
+    } catch (err) {
+      console.error(err);
+      setSyncStatus('error');
+      showToast(`Sync failed: ${err.message || err}`);
+    }
+  });
+
+  document.getElementById('sync-now').addEventListener('click', async () => {
+    if (!getToken()) { showToast('Set a token first'); return; }
+    setSyncStatus('syncing');
+    saveQueue = saveQueue.then(async () => {
+      try {
+        const remote = await ghLoad();
+        mergeRemoteIntoLocal(remote);
+        persistLocal();
+        await ghSaveOnce();
+        lastSyncedAt = Date.now();
+        setSyncStatus('synced');
+        dayLog = STATE.logs[dateKey(currentDate)] || {};
+        await loadNotes();
+        renderAll();
+        await renderHeatmap();
+        showToast('Synced');
+      } catch (err) {
+        console.error(err);
+        setSyncStatus('error');
+        showToast(`Sync failed: ${err.message || err}`);
+      }
+    });
+  });
+
+  document.getElementById('clear-token').addEventListener('click', () => {
+    setToken(null);
+    blobSha = null;
+    setSyncStatus('local-only');
+    showToast('Token cleared');
+  });
+
+  setInterval(() => { if (syncStatus === 'synced') updateSyncBadge(); }, 30000);
+}
+
+async function getDayKeys() {
+  return Object.keys(STATE.logs).map(k => 'log:' + k);
 }
 
 function getAllLogs() {
-  const out = {};
-  try {
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i);
-      if (k && k.startsWith('log:')) {
-        try { out[k.slice(4)] = JSON.parse(localStorage.getItem(k)); }
-        catch (err) {}
-      }
-    }
-  } catch (err) {}
-  return out;
+  return STATE.logs;
 }
 
 function getHistoryForExercise(id) {
@@ -865,15 +1175,14 @@ function showToast(msg) {
 }
 
 function getTierIdx(ex) {
-  const v = localStorage.getItem(`tier:${ex.id}`);
-  if (v !== null) {
-    const n = parseInt(v, 10);
-    if (!Number.isNaN(n)) return Math.max(0, Math.min(n, ex.progression.length - 1));
+  const v = STATE.tiers[ex.id];
+  if (typeof v === 'number' && !Number.isNaN(v)) {
+    return Math.max(0, Math.min(v, ex.progression.length - 1));
   }
   const idx = ex.progression.findIndex(t => t.current);
   return idx >= 0 ? idx : 0;
 }
-function setTierIdx(id, idx) { localStorage.setItem(`tier:${id}`, String(idx)); }
+function setTierIdx(id, idx) { STATE.tiers[id] = idx; schedulePush(); }
 
 function checkProgressionReady(ex) {
   const tIdx = getTierIdx(ex);
@@ -966,14 +1275,17 @@ function computeStreak() {
 async function loadNotes() {
   const el = document.getElementById('day-notes');
   if (!el) return;
-  el.value = localStorage.getItem(`notes:${dateKey(currentDate)}`) || '';
+  el.value = STATE.notes[dateKey(currentDate)] || '';
 }
 function saveNotes() {
   const el = document.getElementById('day-notes');
   if (!el) return;
-  const k = `notes:${dateKey(currentDate)}`;
-  if (el.value.trim()) localStorage.setItem(k, el.value);
-  else localStorage.removeItem(k);
+  const k = dateKey(currentDate);
+  const prev = STATE.notes[k] || '';
+  const v = el.value;
+  if (v.trim()) STATE.notes[k] = v;
+  else delete STATE.notes[k];
+  if ((STATE.notes[k] || '') !== prev) schedulePush();
 }
 
 function setupCapture() {
@@ -1272,6 +1584,11 @@ async function renderHeatmap() {
 }
 
 async function init() {
+  loadLocal();
+  migrateLegacyKeys();
+  setupSyncUI();
+  setSyncStatus(getToken() ? 'idle' : 'local-only');
+
   document.getElementById('prev-day').addEventListener('click', () => changeDay(-1));
   document.getElementById('next-day').addEventListener('click', () => changeDay(1));
   setupCapture();
@@ -1280,10 +1597,27 @@ async function init() {
   window.addEventListener('beforeunload', saveNotes);
   dayLog = await loadDay(currentDate);
   await loadNotes();
-  if (isToday(currentDate)) await saveDay(currentDate, dayLog);
   updateDateDisplay();
   renderAll();
   await renderHeatmap();
+
+  if (getToken()) {
+    setSyncStatus('syncing');
+    try {
+      const remote = await ghLoad();
+      mergeRemoteIntoLocal(remote);
+      persistLocal();
+      lastSyncedAt = Date.now();
+      setSyncStatus('synced');
+      dayLog = STATE.logs[dateKey(currentDate)] || {};
+      await loadNotes();
+      renderAll();
+      await renderHeatmap();
+    } catch (err) {
+      console.error('Initial sync failed:', err);
+      setSyncStatus('error');
+    }
+  }
 }
 
 init();
