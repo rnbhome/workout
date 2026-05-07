@@ -1499,11 +1499,16 @@ function renderExerciseShell(ex) {
           ${sparkSvg}
         </div>` : '';
 
+  const SVG_ONLY = new Set(['pec-stretch']);
+  const illustration = SVG_ONLY.has(ex.id)
+    ? `<div class="illustration"><img class="frame-a" src="svgs/${ex.id}.svg" alt="" loading="lazy" decoding="async"></div>`
+    : `<div class="illustration"><img class="frame-a" src="exercise-imgs/${ex.id}.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove();"><img class="frame-b" src="exercise-imgs/${ex.id}-1.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove();"></div>`;
+
   return `
     <div class="card ${isDone ? 'done' : ''}" data-id="${ex.id}">
       <div class="accent-bar ${cat.accent}"></div>
       <div class="card-top">
-        <div class="illustration"><img class="frame-a" src="exercise-imgs/${ex.id}.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove();"><img class="frame-b" src="exercise-imgs/${ex.id}-1.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove();"></div>
+        ${illustration}
         <div class="card-main">
           <div class="exercise-name">${ex.name}${isPR ? '<span class="chip pr">★ PR</span>' : ''}</div>
           <div class="exercise-desc">${ex.desc}</div>

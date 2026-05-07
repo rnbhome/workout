@@ -16,7 +16,7 @@ Each exercise uses two frames (start + end) animated client-side as a 2-frame lo
 | `lunges` | Bodyweight Walking Lunge | `Bodyweight_Walking_Lunge/0.jpg` | `Bodyweight_Walking_Lunge/1.jpg` |
 | `shoulder-flexion` | Front Dumbbell Raise | `Front_Dumbbell_Raise/0.jpg` | `Front_Dumbbell_Raise/1.jpg` |
 | `shoulder-abduction-standing` | Side Lateral Raise | `Side_Lateral_Raise/0.jpg` | `Side_Lateral_Raise/1.jpg` |
-| `pec-stretch` | Chest And Front Of Shoulder Stretch | `Chest_And_Front_Of_Shoulder_Stretch/0.jpg` | `Chest_And_Front_Of_Shoulder_Stretch/1.jpg` |
+| `pec-stretch` | *(in-house SVG — `svgs/pec-stretch.svg`; wall pec stretch isn't in free-exercise-db)* | — | — |
 | `shoulder-external-rotation` | External Rotation with Band | `External_Rotation_with_Band/0.jpg` | `External_Rotation_with_Band/1.jpg` |
 | `shoulder-abduction-90` | Seated Side Lateral Raise | `Seated_Side_Lateral_Raise/0.jpg` | `Seated_Side_Lateral_Raise/1.jpg` |
 | `bicep-curls` | Concentration Curls | `Concentration_Curls/0.jpg` | `Concentration_Curls/1.jpg` |
