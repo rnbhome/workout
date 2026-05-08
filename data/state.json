@@ -63,7 +63,20 @@
         "reps": 30
       }
     },
-    "2026-05-07": {},
+    "2026-05-07": {
+      "bicep-curls": {
+        "done": true,
+        "weight": 4,
+        "sets": 2,
+        "reps": 10
+      },
+      "wrist-flex-ext": {
+        "done": true,
+        "weight": 4,
+        "sets": 2,
+        "reps": 12
+      }
+    },
     "2026-05-06": {
       "lunges": {
         "done": true,
