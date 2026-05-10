@@ -338,7 +338,7 @@
   .heatmap {
     display: grid; grid-template-columns: 28px repeat(13, 1fr);
     gap: 3px; margin-top: 10px;
-    align-items: center;
+    align-items: end;
   }
   .heatmap .hm-corner {}
   .heatmap .hm-day-head {
@@ -349,9 +349,10 @@
   }
   .heatmap .hm-week-head {
     font-size: 9px; color: var(--ink-muted);
-    text-align: center; line-height: 1.05;
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    white-space: nowrap; text-align: center;
     font-variant-numeric: tabular-nums;
-    white-space: nowrap; overflow: hidden;
+    justify-self: center; padding: 2px 0;
   }
   .heatmap .hm-week-head.today { color: var(--ink); font-weight: 700; }
   .heat-cell {
