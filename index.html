@@ -1826,7 +1826,9 @@ function renderExerciseHeatmap() {
   for (const d of dates) {
     const k = dateKey(d);
     const isT = isToday(d);
-    const lbl = `${d.getMonth() + 1}/${d.getDate()}`;
+    const wd = d.toLocaleDateString('en-GB', { weekday: 'short' });
+    const mo = d.toLocaleDateString('en-GB', { month: 'short' });
+    const lbl = `${wd}, ${d.getDate()} ${mo}`;
     html += `<div class="col-head ${isT ? 'today' : ''}" data-date="${k}" title="${formatDate(d)}">${lbl}</div>`;
   }
 
