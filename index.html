@@ -674,6 +674,17 @@ const EXERCISES = [
       { label: 'Threading needle variation' },
       { label: 'Half-kneeling thoracic rotation' }
     ] },
+  { id: 'tym-holds', category: 'stability', name: 'T-Y-M Holds',
+    desc: 'Prone scap activation — arms form T, Y, then M shape, 5-sec hold each.',
+    defaultWeight: 0, defaultSets: 1, defaultReps: 10, repUnit: 'reps',
+    currentSituation: 'Bodyweight, 5-sec hold per position, 10 reps, 1 set.',
+    formCues: 'Lie face down. Squeeze shoulder blades down and back. Lift arms into T, Y, then M shapes — hold each for 5 seconds. Thumbs up.',
+    progression: [
+      { label: 'No weight, 5-sec holds × 10 (current)', current: true },
+      { label: '5-sec holds × 12' },
+      { label: '5-sec holds × 10, 2 sets' },
+      { label: 'Add light 0.5 kg weights' }
+    ] },
   { id: 'leg-extensions', category: 'lower', name: 'Leg Extensions',
     desc: 'Standing by stairs, lift straight leg forward. Alternating.',
     defaultWeight: 2, defaultSets: 3, defaultReps: 10, repUnit: 'reps/leg',
@@ -685,6 +696,18 @@ const EXERCISES = [
       { label: '2 kg ankle weights, 3×10 (current)', current: true },
       { label: '2 kg, 3×15' },
       { label: '3 kg ankle weights, 3×10' }
+    ] },
+  { id: 'quad-extensions', category: 'lower', name: 'Quad Extensions (seated)',
+    desc: 'Seated, ankle weight on, extend knee straight — hold 5 sec at the top.',
+    defaultWeight: 2, defaultSets: 2, defaultReps: 10, repUnit: 'reps/leg',
+    currentSituation: '2 kg ankle weights, 5-sec hold at top, 2 × 10 each leg.',
+    formCues: 'Sit tall on a chair. Slowly extend the knee to straight. Squeeze the quad and hold 5 seconds at the top. Lower with control.',
+    progression: [
+      { label: 'Bodyweight, 5-sec hold', done: true },
+      { label: '1 kg ankle weights, 5-sec hold', done: true },
+      { label: '2 kg ankle weights, 5-sec hold × 10, 2 sets (current)', current: true },
+      { label: '2 kg, 5-sec hold × 12, 2 sets' },
+      { label: '3 kg ankle weights, 5-sec hold × 10' }
     ] },
   { id: 'side-hip-abduction', category: 'lower', name: 'Side Hip Abduction',
     desc: 'Standing on stairs, lift one leg out to the side.',
@@ -1206,7 +1229,9 @@ function isTodayPR(ex, log) {
 const KEYWORDS = {
   'pushup-holds':                ['push up holds', 'pushup holds', 'push-up holds', 'push up', 'pushup', 'push-up', 'plank'],
   'thoracic-rotation':           ['thoracic rotation', 'thoracic'],
+  'tym-holds':                   ['tym holds', 'tym', 't y m', 'ty m'],
   'leg-extensions':              ['leg extensions', 'leg extension'],
+  'quad-extensions':             ['quad extensions', 'quad extension', 'quadriceps extension', 'knee extension'],
   'side-hip-abduction':          ['side hip abduction', 'hip abduction', 'side hip'],
   'hip-flexion':                 ['hip flexion', 'knee raise', 'marching', 'march'],
   'heel-raises':                 ['heel raises', 'heel raise', 'calf raises', 'calf raise'],
