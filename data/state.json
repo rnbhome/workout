@@ -115,6 +115,12 @@
         "weight": 12.5,
         "sets": 1,
         "reps": 15
+      },
+      "quad-extensions": {
+        "done": true,
+        "weight": 2,
+        "sets": 2,
+        "reps": 10
       }
     }
   },
