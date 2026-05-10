@@ -96,6 +96,20 @@
         "sets": 2,
         "reps": 10
       }
+    },
+    "2026-05-10": {
+      "leg-extensions": {
+        "done": true,
+        "weight": 2,
+        "sets": 3,
+        "reps": 10
+      },
+      "side-hip-abduction": {
+        "done": true,
+        "weight": 2,
+        "sets": 3,
+        "reps": 10
+      }
     }
   },
   "notes": {},
