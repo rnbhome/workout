@@ -8,6 +8,8 @@ Each exercise uses two frames (start + end) animated client-side as a 2-frame lo
 |---|---|---|---|
 | `pushup-holds` | Plank | `Plank/0.jpg` | `Plank/1.jpg` |
 | `thoracic-rotation` | Torso Rotation | `Torso_Rotation/0.jpg` | `Torso_Rotation/1.jpg` |
+| `tym-holds` | Superman *(approx — no T-Y-M specific entry in DB)* | `Superman/0.jpg` | `Superman/1.jpg` |
+| `quad-extensions` | Leg Extensions | `Leg_Extensions/0.jpg` | `Leg_Extensions/1.jpg` |
 | `leg-extensions` | Front Leg Raises | `Front_Leg_Raises/0.jpg` | `Front_Leg_Raises/1.jpg` |
 | `side-hip-abduction` | Side Leg Raises | `Side_Leg_Raises/0.jpg` | `Side_Leg_Raises/1.jpg` |
 | `hip-flexion` | Hip Flexion with Band | `Hip_Flexion_with_Band/0.jpg` | `Hip_Flexion_with_Band/1.jpg` |
