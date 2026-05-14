@@ -125,13 +125,13 @@
     },
     "2026-05-14": {
       "pushup-holds": {
-        "done": true,
+        "done": false,
         "weight": 0,
         "sets": 3,
         "reps": 20
       },
       "tym-holds": {
-        "done": true,
+        "done": false,
         "weight": 0,
         "sets": 1,
         "reps": 10
