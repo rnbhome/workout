@@ -129,6 +129,12 @@
         "weight": 0,
         "sets": 3,
         "reps": 20
+      },
+      "tym-holds": {
+        "done": true,
+        "weight": 0,
+        "sets": 1,
+        "reps": 10
       }
     }
   },
