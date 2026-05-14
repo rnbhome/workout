@@ -123,9 +123,9 @@
         "reps": 10
       },
       "shoulder-external-rotation": {
-        "done": false,
+        "done": true,
         "weight": 3,
-        "sets": 2,
+        "sets": 21,
         "reps": 12
       }
     },
