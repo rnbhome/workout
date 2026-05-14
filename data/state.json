@@ -121,6 +121,12 @@
         "weight": 2,
         "sets": 2,
         "reps": 10
+      },
+      "shoulder-external-rotation": {
+        "done": false,
+        "weight": 3,
+        "sets": 2,
+        "reps": 12
       }
     },
     "2026-05-14": {
