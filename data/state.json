@@ -154,6 +154,20 @@
         "sets": 2,
         "reps": 12
       }
+    },
+    "2026-05-13": {
+      "pushup-holds": {
+        "done": true,
+        "weight": 0,
+        "sets": 3,
+        "reps": 20
+      },
+      "tym-holds": {
+        "done": true,
+        "weight": 0,
+        "sets": 1,
+        "reps": 10
+      }
     }
   },
   "notes": {},
