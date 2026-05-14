@@ -135,6 +135,24 @@
         "weight": 0,
         "sets": 1,
         "reps": 10
+      },
+      "bicep-curls": {
+        "done": true,
+        "weight": 4,
+        "sets": 2,
+        "reps": 10
+      },
+      "pronation-supination": {
+        "done": true,
+        "weight": 4,
+        "sets": 2,
+        "reps": 12
+      },
+      "wrist-flex-ext": {
+        "done": true,
+        "weight": 4,
+        "sets": 2,
+        "reps": 12
       }
     }
   },
