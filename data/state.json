@@ -159,6 +159,12 @@
         "weight": 4,
         "sets": 2,
         "reps": 12
+      },
+      "heel-raises": {
+        "done": true,
+        "weight": 0,
+        "sets": 1,
+        "reps": 15
       }
     },
     "2026-05-13": {
