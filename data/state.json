@@ -165,6 +165,12 @@
         "weight": 0,
         "sets": 1,
         "reps": 15
+      },
+      "shoulder-abduction-standing": {
+        "done": true,
+        "weight": 1,
+        "sets": 2,
+        "reps": 10
       }
     },
     "2026-05-13": {
