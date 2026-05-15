@@ -137,7 +137,7 @@
         "reps": 20
       },
       "tym-holds": {
-        "done": false,
+        "done": true,
         "weight": 0,
         "sets": 1,
         "reps": 10
