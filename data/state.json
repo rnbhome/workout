@@ -217,6 +217,12 @@
         "weight": 12.5,
         "sets": 3,
         "reps": 15
+      },
+      "leg-extensions": {
+        "done": true,
+        "weight": 2,
+        "sets": 3,
+        "reps": 10
       }
     }
   },
