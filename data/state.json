@@ -211,6 +211,12 @@
         "weight": 2,
         "sets": 3,
         "reps": 10
+      },
+      "squats": {
+        "done": true,
+        "weight": 12.5,
+        "sets": 3,
+        "reps": 15
       }
     }
   },
