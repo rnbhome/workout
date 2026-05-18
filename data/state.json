@@ -223,6 +223,12 @@
         "weight": 2,
         "sets": 3,
         "reps": 10
+      },
+      "bicep-curls": {
+        "done": true,
+        "weight": 4,
+        "sets": 2,
+        "reps": 10
       }
     }
   },
