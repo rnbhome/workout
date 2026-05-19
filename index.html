@@ -20,6 +20,7 @@
     --lower: #b85440;
     --upper-std: #5d8268;
     --upper-seat: #4a6a8a;
+    --cardio: #7d5c8a;
     --todo: #9a9080;
     --done-bg: #ede4cf;
   }
@@ -115,6 +116,7 @@
   .accent-lower { background: var(--lower); }
   .accent-upper-std { background: var(--upper-std); }
   .accent-upper-seat { background: var(--upper-seat); }
+  .accent-cardio { background: var(--cardio); }
   .accent-todo { background: var(--todo); }
 
   .card-top { display: flex; gap: 12px; align-items: flex-start; }
@@ -445,6 +447,7 @@
   .ex-heatmap-legend .cat-lower { color: rgb(184,84,64); }
   .ex-heatmap-legend .cat-upper-std { color: rgb(93,130,104); }
   .ex-heatmap-legend .cat-upper-seat { color: rgb(74,106,138); }
+  .ex-heatmap-legend .cat-cardio { color: rgb(125,92,138); }
   .ex-heatmap-legend .cat-todo { color: rgb(154,144,128); }
   .ex-heatmap-hint { font-size: 10px; color: var(--ink-faint); margin-top: 4px; }
 
@@ -901,6 +904,28 @@ const EXERCISES = [
       { label: '1 kg, 3×12' },
       { label: 'Switch to band against doorframe' },
       { label: '2 kg with band' }
+    ] },
+  { id: 'walking', category: 'cardio', name: 'Walking', isCardio: true,
+    desc: 'Continuous walking, indoor or outdoor.',
+    defaultWeight: 0, defaultSets: 1, defaultReps: 30, repUnit: 'min',
+    currentSituation: '30 minutes, easy pace.',
+    formCues: 'Steady pace you could hold a conversation at. Keep posture tall, arms swing naturally.',
+    progression: [
+      { label: '20 min', done: true },
+      { label: '30 min (current)', current: true },
+      { label: '45 min' },
+      { label: '60 min, brisk pace' }
+    ] },
+  { id: 'stair-climbing', category: 'cardio', name: 'Stair Climbing', isCardio: true,
+    desc: 'Going up and down stairs, or a stair machine, for time.',
+    defaultWeight: 0, defaultSets: 1, defaultReps: 10, repUnit: 'min',
+    currentSituation: '10 minutes, steady pace.',
+    formCues: 'Push through the whole foot on the way up. Hold the rail for safety on the way down — control, do not bounce.',
+    progression: [
+      { label: '5 min', done: true },
+      { label: '10 min (current)', current: true },
+      { label: '15 min' },
+      { label: '20 min, alternating pace' }
     ] }
 ];
 
@@ -909,6 +934,7 @@ const CATEGORIES = [
   { id: 'lower', label: 'Lower Body', accent: 'accent-lower' },
   { id: 'upper-std', label: 'Upper Body — Standing', accent: 'accent-upper-std' },
   { id: 'upper-seat', label: 'Upper Body — Seated', accent: 'accent-upper-seat' },
+  { id: 'cardio', label: 'Cardio', accent: 'accent-cardio' },
   { id: 'todo', label: 'New / To Add', accent: 'accent-todo' }
 ];
 
@@ -1261,7 +1287,9 @@ const KEYWORDS = {
   'pronation-supination':        ['pronation supination', 'pronation', 'supination', 'forearm rotation'],
   'wrist-flex-ext':              ['wrist flexion', 'wrist extension', 'wrist'],
   'posterior-fly':               ['posterior fly', 'rear fly', 'rear delt'],
-  'shoulder-internal-rotation':  ['internal rotation', 'shoulder internal']
+  'shoulder-internal-rotation':  ['internal rotation', 'shoulder internal'],
+  'walking':                     ['walking', 'walk', 'walked'],
+  'stair-climbing':              ['stair climbing', 'stair climb', 'stairs', 'stair', 'stairmaster']
 };
 
 function parseVoiceLog(input) {
@@ -1316,6 +1344,8 @@ function parseNumberWindow(win) {
   if (reps && out.reps === undefined) out.reps = +reps[1];
   const sets = /(\d+)\s*sets?\b/.exec(win);
   if (sets && out.sets === undefined) out.sets = +sets[1];
+  const mins = /(\d+(?:\.\d+)?)\s*(?:min|mins|minutes?)\b/.exec(win);
+  if (mins && out.reps === undefined) out.reps = parseFloat(mins[1]);
   return out;
 }
 
@@ -1517,9 +1547,11 @@ function renderExerciseShell(ex) {
 
   const tIdx = getTierIdx(ex);
   const currentTier = ex.progression[tIdx];
-  const specText = ex.defaultWeight > 0
-    ? `${ex.defaultWeight} kg · ${ex.defaultSets}×${ex.defaultReps} ${ex.repUnit}`
-    : `Bodyweight · ${ex.defaultSets}×${ex.defaultReps} ${ex.repUnit}`;
+  const specText = ex.isCardio
+    ? `${ex.defaultReps} ${ex.repUnit}`
+    : ex.defaultWeight > 0
+      ? `${ex.defaultWeight} kg · ${ex.defaultSets}×${ex.defaultReps} ${ex.repUnit}`
+      : `Bodyweight · ${ex.defaultSets}×${ex.defaultReps} ${ex.repUnit}`;
 
   const isPR = isDone && isTodayPR(ex, log);
   const ready = checkProgressionReady(ex);
@@ -1562,6 +1594,12 @@ function renderExerciseShell(ex) {
             ? `<svg class="check-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,8 7,12 13,4"/></svg> Done`
             : `<svg class="check-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="6"/></svg> Mark done`}
         </button>
+        ${ex.isCardio ? `
+        <div class="input-group">
+          <label>Min</label>
+          <input type="number" step="1" min="0" value="${reps}" data-field="reps" data-id="${ex.id}">
+          <span class="unit">min</span>
+        </div>` : `
         <div class="input-group">
           <label>Wt</label>
           <input type="number" step="0.5" min="0" value="${weight}" data-field="weight" data-id="${ex.id}">
@@ -1574,7 +1612,7 @@ function renderExerciseShell(ex) {
         <div class="input-group">
           <label>Reps</label>
           <input type="number" step="1" min="0" value="${reps}" data-field="reps" data-id="${ex.id}">
-        </div>
+        </div>`}
       </div>
       <button class="expand-btn" data-action="expand">
         <span class="arrow">&rsaquo;</span> Form, progression &amp; history
@@ -1641,8 +1679,8 @@ function renderRecommendations() {
 
   grid.innerHTML = picks.map(({ ex, gap, last, weight, sets, reps }) => {
     const isBW = (ex.defaultWeight || 0) === 0 && (!weight || weight === 0);
-    const wTxt = isBW ? 'bodyweight' : `${weight} kg`;
-    const specTxt = `${sets}×${reps} ${ex.repUnit}`;
+    const wTxt = ex.isCardio ? '' : (isBW ? 'bodyweight' : `${weight} kg`);
+    const specTxt = ex.isCardio ? `${reps} ${ex.repUnit}` : `${sets}×${reps} ${ex.repUnit}`;
     let agoTxt;
     let stale = false;
     if (!last) { agoTxt = 'never'; stale = true; }
@@ -1654,7 +1692,7 @@ function renderRecommendations() {
       <span class="dot" style="background:rgb(${catRGB(ex.category)});"></span>
       <div class="rec-body">
         <div class="rec-name">${ex.name}</div>
-        <div class="rec-meta">${wTxt} · ${specTxt} · <span class="ago${stale ? ' stale' : ''}">${agoTxt}</span></div>
+        <div class="rec-meta">${wTxt ? wTxt + ' · ' : ''}${specTxt} · <span class="ago${stale ? ' stale' : ''}">${agoTxt}</span></div>
       </div>
     </div>`;
   }).join('');
@@ -1791,6 +1829,7 @@ function catRGB(id) {
     case 'lower': return '184,84,64';
     case 'upper-std': return '93,130,104';
     case 'upper-seat': return '74,106,138';
+    case 'cardio': return '125,92,138';
     case 'todo': return '154,144,128';
   }
   return '154,144,128';

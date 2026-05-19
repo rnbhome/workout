@@ -26,3 +26,5 @@ Each exercise uses two frames (start + end) animated client-side as a 2-frame lo
 | `wrist-flex-ext` | Palms-Up Dumbbell Wrist Curl Over A Bench | `Palms-Up_Dumbbell_Wrist_Curl_Over_A_Bench/0.jpg` | `Palms-Up_Dumbbell_Wrist_Curl_Over_A_Bench/1.jpg` |
 | `posterior-fly` | Reverse Flyes | `Reverse_Flyes/0.jpg` | `Reverse_Flyes/1.jpg` |
 | `shoulder-internal-rotation` | Internal Rotation with Band | `Internal_Rotation_with_Band/0.jpg` | `Internal_Rotation_with_Band/1.jpg` |
+| `walking` | Walking, Treadmill | `Walking_Treadmill/0.jpg` | `Walking_Treadmill/1.jpg` |
+| `stair-climbing` | Stairmaster | `Stairmaster/0.jpg` | `Stairmaster/1.jpg` |
