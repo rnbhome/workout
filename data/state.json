@@ -242,6 +242,14 @@
         "sets": 2,
         "reps": 12
       }
+    },
+    "2026-05-19": {
+      "stair-climbing": {
+        "done": true,
+        "weight": 0,
+        "sets": 1,
+        "reps": 10
+      }
     }
   },
   "notes": {
